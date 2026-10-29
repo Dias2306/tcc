@@ -42,14 +42,14 @@ body {
     background:
         radial-gradient(
             ellipse at 80% 20%,
-            #17608b,
+            #0f4c6d,
             transparent 45%
         ),
         linear-gradient(
             135deg,
-            #44266c,
-            #174b75 50%,
-            #07112f
+            #11194D 0%,
+            #171D43 55%,
+            #242D66 100%
         );
 }
 
@@ -90,7 +90,7 @@ body {
 
 .cartoes {
     width: 100%;
-    max-width: 1500px;
+    max-width: 2500px;
 
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -101,7 +101,7 @@ body {
 
 .cartao {
     min-width: 0;
-    min-height: 420px;
+    min-height: 650px;
 
     display: flex;
     flex-direction: column;
@@ -123,7 +123,7 @@ body {
 /* ÁREA SUPERIOR DOS CARTÕES */
 
 .imagem {
-    height: 170px;
+    height: 270px;
     flex-shrink: 0;
 
     display: flex;
@@ -151,7 +151,7 @@ body {
     text-align: center;
 
     color: #8ec5ff;
-    font-size: clamp(16px, 1.5vw, 22px);
+    font-size: clamp(50px, 1.5vw, 50px);
     letter-spacing: 1px;
 }
 
@@ -179,7 +179,7 @@ body {
 
     color: #c5d9f5;
     text-align: center;
-    font-size: 14px;
+    font-size: 18px;
     line-height: 1.5;
 
     flex-grow: 1;
