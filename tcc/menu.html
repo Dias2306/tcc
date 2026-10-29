@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/menu.css">
+    
+</head>
+<body>
+  <div id="meuMenuLateral" class="lateral-menu">
+  <a href="javascript:void(0)" class="botao-fechar" onclick="fecharMenu()">&times;</a>
+  <a href="#">Início</a>
+  <a href="#">Serviços</a>
+  <a href="#">Clientes</a>
+  <a href="#">Contato</a>
+</div>
+
+<span style="font-size:30px;cursor:pointer" onclick="abrirMenu()">&#9776; Abrir Menu</span>
+
+  </main>
+</div>
+</body>
+
+<script>
+    function abrirMenu() {
+  document.getElementById("meuMenuLateral").style.width = "250px";
+}
+
+function fecharMenu() {
+  document.getElementById("meuMenuLateral").style.width = "0";
+}
+
+</script>
+</html>

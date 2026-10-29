@@ -1,0 +1,253 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: #111;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* CABEÇALHO */
+
+.cabecalho {
+    height: 72px;
+    background: #2c2731;
+    display: flex;
+    align-items: center;
+    padding: 0 9%;
+    border-bottom: 1px solid #ffffff15;
+}
+
+.cabecalho a {
+    color: white;
+    text-decoration: none;
+    font-size: clamp(20px, 2.2vw, 29px);
+}
+
+/* FUNDO PRINCIPAL */
+
+.pagina {
+    min-height: calc(100vh - 72px);
+    padding: 100px 3.5% 60px;
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            ellipse at 80% 20%,
+            #17608b,
+            transparent 45%
+        ),
+        linear-gradient(
+            135deg,
+            #44266c,
+            #174b75 50%,
+            #07112f
+        );
+}
+
+/* BOTÃO VOLTAR */
+
+.voltar {
+    position: absolute;
+    top: 24px;
+    left: 16px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 8px 14px;
+    border-radius: 30px;
+    border: 1px solid #ffffff30;
+
+    background: #030e35;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+
+    transition: 0.2s;
+}
+
+.voltar span {
+    font-size: 25px;
+    line-height: 18px;
+}
+
+.voltar:hover {
+    background: #075bff;
+    transform: translateX(-3px);
+}
+
+/* ORGANIZAÇÃO DOS CARTÕES */
+
+.cartoes {
+    width: 100%;
+    max-width: 1500px;
+
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(18px, 3.5vw, 50px);
+}
+
+/* CARTÕES */
+
+.cartao {
+    min-width: 0;
+    min-height: 420px;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #030e35;
+    border: 1px solid #075bff;
+    border-radius: 34px;
+    overflow: hidden;
+
+    box-shadow: 0 15px 35px #00000035;
+    transition: 0.25s;
+}
+
+.cartao:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 20px 40px #00000055;
+}
+
+/* ÁREA SUPERIOR DOS CARTÕES */
+
+.imagem {
+    height: 170px;
+    flex-shrink: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: linear-gradient(
+        145deg,
+        #06194c,
+        #020a28
+    );
+
+    border: 1px solid #0b3eae;
+    border-radius: 32px;
+}
+
+.imagem span {
+    font-size: 55px;
+}
+
+/* TÍTULOS */
+
+.cartao h2 {
+    margin: 24px 12px 20px;
+    text-align: center;
+
+    color: #8ec5ff;
+    font-size: clamp(16px, 1.5vw, 22px);
+    letter-spacing: 1px;
+}
+
+/* LINHAS DECORATIVAS */
+
+.linhas {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+
+    padding: 0 8px;
+    margin-bottom: 18px;
+}
+
+.linhas span {
+    width: 100%;
+    height: 1px;
+    background: #8ec5ff;
+}
+
+/* DESCRIÇÃO */
+
+.cartao p {
+    padding: 0 18px;
+
+    color: #c5d9f5;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.5;
+
+    flex-grow: 1;
+}
+
+/* BOTÃO DOS CARTÕES */
+
+.botao {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 43px;
+    margin: 20px 18px 22px;
+
+    border-radius: 9px;
+    background: linear-gradient(
+        100deg,
+        #243cbd,
+        #075bff
+    );
+
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+
+    transition: 0.2s;
+}
+
+.botao:hover {
+    filter: brightness(1.2);
+    transform: translateY(-2px);
+}
+
+/* TABLETS */
+
+@media (max-width: 1000px) {
+    .cartoes {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        max-width: 760px;
+        gap: 24px;
+    }
+}
+
+/* CELULARES */
+
+@media (max-width: 560px) {
+    .cabecalho {
+        padding: 0 20px;
+        height: 64px;
+    }
+
+    .pagina {
+        padding: 85px 20px 40px;
+    }
+
+    .cartoes {
+        grid-template-columns: 1fr;
+        max-width: 360px;
+        gap: 22px;
+    }
+
+    .cartao {
+        min-height: 370px;
+    }
+
+    .imagem {
+        height: 145px;
+    }
+}

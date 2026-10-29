@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | P.A.E.</title>
+    <link rel="stylesheet" href="./css/logins.css">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <!-- Painel esquerdo: formulário -->
+        <section class="painel-login">
+
+            <a href="index.html" class="voltar" aria-label="Voltar para a página inicial">
+                &#10094;
+                <span>Voltar</span>
+            </a>
+
+            <div class="conteudo-login">
+
+                <h1>Login</h1>
+                <p class="subtitulo">Acesse sua conta do P.A.E.</p>
+
+                <form action="#" method="post">
+
+                    <div class="campo">
+                        <label for="rm">RM</label>
+                        <input
+                            type="text"
+                            id="rm"
+                            name="rm"
+                            placeholder="Digite seu RM"
+                            autocomplete="username"
+                            required
+                        >
+                    </div>
+
+                    <div class="campo">
+                        <label for="senha">Senha</label>
+                        <input
+                            type="password"
+                            id="senha"
+                            name="senha"
+                            placeholder="Digite sua senha"
+                            autocomplete="current-password"
+                            required
+                        >
+                    </div>
+
+                    <a href="recuperar-senha.html" class="esqueci">
+                        Esqueci minha senha
+                    </a>
+
+                    <button type="submit" class="btn-entrar">
+                        ENTRAR
+                    </button>
+
+                </form>
+
+                <p class="cadastro">
+                    Ainda não tem conta?
+                    <a href="cadastro.html">Criar conta</a>
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- Painel direito: identidade visual -->
+        <section class="painel-visual">
+
+            <div class="visual-conteudo">
+                <span class="linha-decorativa"></span>
+                <h2>P.A.E.</h2>
+                <p>Projeto de Auxílio Escolar</p>
+                <span class="descricao">
+                    Sua vida escolar em um só lugar.
+                </span>
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+</html>
