@@ -1,23 +1,79 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+:root {
+    --azul: #242D66;
+    --preto: #000000;
+    --branco: #FFFFFF;
+    --azul-vivo: #1D91F2;
+    --azul-profundo: #11194D;
+
+    --borda: rgba(65, 66, 220, 0.8);
+    --texto-suave: #A9B5D6;
+}
+
 .lateral-menu {
   height: 100%;
   width: 0;
   position: fixed;
   z-index: 1;
   top: 0;
-  left: 0;
-  background-color: #111;
+  right: 0;              /* era left: 0 */
+  background: linear-gradient(
+        145deg,
+        #242D66,
+        #11194D
+    );
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
 }
+.cabecalho{
+  background: linear-gradient(
+        145deg,
+        #242D66,
+        #11194D
+    );
+  height: 5em;
+  display: flex;
+  align-items: center;
+}
+.texto{
+   margin-left: 20px;
+   font-size: 20px;
+}
+.texto h3{
+ color: #000;
+
+}
+
+.botao{
+  position: fixed;
+  z-index: 0;
+  top: 0;
+  right: 0;  
+}
+
+.botao img{
+  margin: 10px;
+  height: 50px;
+  width: 50px;
+}
+
+
 
 .lateral-menu a {
-  padding: 8px 8px 8px 32px;
+  padding: 8px 32px 8px 8px;   /* o recuo agora fica do lado direito (opcional) */
   text-decoration: none;
   font-size: 25px;
   color: #818181;
   display: block;
   transition: 0.3s;
+  margin-left: 10px;
 }
 
 .lateral-menu a:hover {
@@ -27,7 +83,7 @@
 .lateral-menu .botao-fechar {
   position: absolute;
   top: 0;
-  right: 25px;
+  left: 25px;            /* era right: 25px */
   font-size: 36px;
-  margin-left: 50px;
+  margin-right: 50px;    /* era margin-left: 50px */
 }

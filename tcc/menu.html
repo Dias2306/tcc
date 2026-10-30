@@ -1,35 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./css/menu.css">
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="./css/menu.css">
+
 </head>
+
 <body>
+  <div class="cabecalho">
+
+    <div class="texto"><h3>P.A.E</h3></div>
+
+    <span class="botao" onclick="abrirMenu()"><img src="./icon/do-utilizador.png" alt=""></span>
+  </div>
+
+
   <div id="meuMenuLateral" class="lateral-menu">
-  <a href="javascript:void(0)" class="botao-fechar" onclick="fecharMenu()">&times;</a>
-  <a href="#">Início</a>
-  <a href="#">Serviços</a>
-  <a href="#">Clientes</a>
-  <a href="#">Contato</a>
-</div>
+    <a href="javascript:void(0)" class="botao-fechar" onclick="fecharMenu()">&times;</a>
+    <a href="#">Perfil</a>
+    <a href="#">Atividades</a>
+    <a href="#">Material</a>
+    <a href="#">Horário</a>
+  </div>
 
-<span style="font-size:30px;cursor:pointer" onclick="abrirMenu()">&#9776; Abrir Menu</span>
-
-  </main>
-</div>
 </body>
 
 <script>
-    function abrirMenu() {
-  document.getElementById("meuMenuLateral").style.width = "250px";
-}
+  function abrirMenu() {
+    document.querySelector(".lateral-menu").style.width = "250px";
+    document.getElementById("principal").style.marginRight = "250px";  // era marginLeft
+  }
 
-function fecharMenu() {
-  document.getElementById("meuMenuLateral").style.width = "0";
-}
+  function fecharMenu() {
+    document.querySelector(".lateral-menu").style.width = "0";
+    document.getElementById("principal").style.marginRight = "0";      // era marginLeft
+  }
 
 </script>
+
 </html>
