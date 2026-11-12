@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Postar atividade</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f1f1f5;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  /* A caixa branca do formulário */
+  .caixa {
+    background: #fff;
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    width: 100%;
+    max-width: 480px;
+    box-sizing: border-box;
+  }
+
+  h2 {
+    margin: 0 0 16px;
+    color: #4f46e5;
+  }
+
+  label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 12px;
+    color: #333;
+  }
+
+  input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-family: inherit;
+  }
+
+  textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+
+  button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #4f46e5;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<div class="caixa">
+  <h2>Postar atividade</h2>
+
+  <form method="post">
+
+    <label>Turma e matéria
+      <select name="id_ptm" required>
+        <option value="">Selecione...</option>
+        <!-- por enquanto são opções de teste; no passo 3 vêm do banco -->
+        <option value="1">DS-2A — Programação Web</option>
+        <option value="2">DS-3B — Banco de Dados</option>
+      </select>
+    </label>
+
+    <label>Título
+      <input name="titulo" maxlength="150" required>
+    </label>
+
+    <label>Descrição
+      <textarea name="descricao"></textarea>
+    </label>
+
+    <label>Prazo de entrega (opcional)
+      <input name="prazo" type="datetime-local">
+    </label>
+
+    <button type="submit">Postar</button>
+
+  </form>
+</div>
+
+</body>
+</html>
