@@ -45,6 +45,17 @@ function criarTabela($con, $nome, $sql)
     }
 }
 
+function criarRotina($con, $nome, $sql)
+{
+    if ($con->query($sql) === true)
+    {
+        echo " $nome criado<br>";
+    }
+    else
+    {
+        echo " ERRO em $nome: " . $con->error . "<br>";
+    }
+}
 
 $sql = "CREATE TABLE administracao (
     rm     CHAR(5)      NOT NULL,
@@ -227,9 +238,8 @@ $sql = "CREATE TABLE IF NOT EXISTS horario_aula (
 criarTabela($con, "horario_aula", $sql);
  
  
-// procedure: a turma não pode ter duas aulas que se sobrepõem
 $con->query("DROP PROCEDURE IF EXISTS verificar_conflito_turma");
- 
+
 $sql = "CREATE PROCEDURE verificar_conflito_turma(
   IN p_turma  INT,
   IN p_dia    TINYINT,
@@ -241,7 +251,9 @@ BEGIN
   DECLARE v_materia VARCHAR(60) DEFAULT NULL;
   DECLARE v_inicio  TIME;
   DECLARE v_fim     TIME;
- 
+  DECLARE v_msg     VARCHAR(128);
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET v_materia = NULL;
+
   SELECT materia, hora_inicio, hora_fim
     INTO v_materia, v_inicio, v_fim
     FROM horario_aula
@@ -251,18 +263,17 @@ BEGIN
      AND hora_fim > p_inicio
      AND id_horario <> p_id
    LIMIT 1;
- 
+
   IF v_materia IS NOT NULL THEN
-    SIGNAL SQLSTATE '45000'
-      SET MESSAGE_TEXT = CONCAT(
-        'A turma já tem aula de ', v_materia, ' das ',
-        TIME_FORMAT(v_inicio, '%H:%i'), ' às ',
-        TIME_FORMAT(v_fim, '%H:%i'), ' nesse dia.'
-      );
+    SET v_msg = CONCAT(
+      'A turma já tem aula de ', v_materia, ' das ',
+      TIME_FORMAT(v_inicio, '%H:%i'), ' às ',
+      TIME_FORMAT(v_fim, '%H:%i'), ' nesse dia.'
+    );
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = v_msg;
   END IF;
 END";
-criarRotina($con, "procedure verificar_conflito_turma", $sql);
- 
+criarRotina($con, "procedure verificar_conflito_turma", $sql); 
  
 $con->query("DROP TRIGGER IF EXISTS trg_horario_insert");
  
@@ -285,6 +296,146 @@ BEGIN
   CALL verificar_conflito_turma(NEW.id_turma, NEW.dia_semana, NEW.hora_inicio, NEW.hora_fim, NEW.id_horario);
 END";
 criarRotina($con, "trigger trg_horario_update", $sql);
+
+function inserir($con, $nome, $sql)
+{
+    if ($con->query($sql) === true)
+    {
+        echo " $nome inserido(s)<br>";
+    }
+    else
+    {
+        echo " ERRO em $nome: " . $con->error . "<br>";
+    }
+}
+
+
+// a senha 123456 já salva com hash
+$hash = password_hash("123456", PASSWORD_DEFAULT);
+
+
+// ---------- administracao ----------
+$sql = "INSERT INTO administracao (rm, nome, cpf, senha) VALUES
+    ('90001', 'Secretaria Escolar', '00000000001', '$hash')";
+inserir($con, "administracao", $sql);
+
+
+// ---------- curso ----------
+$sql = "INSERT INTO curso (codigo, nome) VALUES
+    (1, 'Desenvolvimento de Sistemas'),
+    (2, 'Informática para Internet')";
+inserir($con, "curso", $sql);
+
+
+// ---------- materia ----------
+$sql = "INSERT INTO materia (id_materia, nome) VALUES
+    (1, 'Programação Web'),
+    (2, 'Banco de Dados'),
+    (3, 'Lógica de Programação'),
+    (4, 'Análise de Sistemas')";
+inserir($con, "materia", $sql);
+
+
+// ---------- curso_materia ----------
+$sql = "INSERT INTO curso_materia (codigo_curso, id_materia) VALUES
+    (1, 1), (1, 2), (1, 3), (1, 4),
+    (2, 1), (2, 3)";
+inserir($con, "curso_materia", $sql);
+
+
+// ---------- turma ----------
+$sql = "INSERT INTO turma (id_turma, nome, codigo_curso, ano_letivo, capacidade) VALUES
+    (1, 'DS-2A', 1, 2026, 40),
+    (2, 'DS-3B', 1, 2026, 40),
+    (3, 'II-1A', 2, 2026, 35)";
+inserir($con, "turma", $sql);
+
+
+// ---------- professor ----------
+$sql = "INSERT INTO professor (rm, nome, cpf, telefone, senha) VALUES
+    ('10001', 'Carlos Mendes', '00000000002', '11900000001', '$hash'),
+    ('10002', 'Ana Souza',     '00000000003', '11900000002', '$hash')";
+inserir($con, "professor", $sql);
+
+
+// ---------- aluno ----------
+$sql = "INSERT INTO aluno (rm, nome, cpf, senha, cep, rua, numero, bairro, cidade, estado, id_turma) VALUES
+    ('20001', 'João Silva',    '00000000011', '$hash', '01001000', 'Rua das Flores', '100', 'Centro', 'São Paulo', 'SP', 1),
+    ('20002', 'Maria Santos',  '00000000012', '$hash', '01001000', 'Rua das Flores', '120', 'Centro', 'São Paulo', 'SP', 1),
+    ('20003', 'Pedro Lima',    '00000000013', '$hash', '01001000', 'Rua do Sol',     '45',  'Centro', 'São Paulo', 'SP', 2),
+    ('20004', 'Lucas Ferreira','00000000014', '$hash', '01001000', 'Rua do Sol',     '60',  'Centro', 'São Paulo', 'SP', 3)";
+inserir($con, "aluno", $sql);
+
+
+// ---------- professor_turma_materia ----------
+// (cada turma + matéria só pode ter um professor)
+$sql = "INSERT INTO professor_turma_materia (id, rm_professor, id_turma, id_materia) VALUES
+    (1, '10001', 1, 1),
+    (2, '10001', 2, 2),
+    (3, '10002', 1, 2),
+    (4, '10002', 3, 1),
+    (5, '10002', 2, 3)";
+inserir($con, "professor_turma_materia", $sql);
+
+
+// ---------- atividade ----------
+// Um INSERT por atividade: o num_atividade é preenchido pelo trigger
+// (não informe esse campo).
+$sql = "INSERT INTO atividade (rm_professor, id_professor_turma_materia, titulo, descricao, data_publicacao, prazo) VALUES
+    ('10001', 1, 'Lista de exercícios de HTML', 'Resolva os exercícios 1 a 10 da apostila e envie o arquivo.', '2026-11-09 14:30:00', '2026-11-27 23:59:00')";
+inserir($con, "atividade 1", $sql);
+
+$sql = "INSERT INTO atividade (rm_professor, id_professor_turma_materia, titulo, descricao, data_publicacao, prazo) VALUES
+    ('10001', 1, 'Mini projeto: página pessoal', 'Crie uma página pessoal com HTML e CSS (cabeçalho, menu e rodapé).', '2026-11-12 09:00:00', '2026-12-04 23:59:00')";
+inserir($con, "atividade 2", $sql);
+
+$sql = "INSERT INTO atividade (rm_professor, id_professor_turma_materia, titulo, descricao, data_publicacao, prazo) VALUES
+    ('10001', 2, 'Modelagem do banco da biblioteca', 'Entregue o diagrama entidade-relacionamento da biblioteca.', '2026-11-10 08:15:00', '2026-11-20 23:59:00')";
+inserir($con, "atividade 3", $sql);
+
+$sql = "INSERT INTO atividade (rm_professor, id_professor_turma_materia, titulo, descricao, data_publicacao, prazo) VALUES
+    ('10002', 3, 'Consultas com JOIN', 'Escreva 5 consultas usando INNER JOIN no banco da escola.', '2026-11-11 16:00:00', '2026-11-25 23:59:00')";
+inserir($con, "atividade 4", $sql);
+
+$sql = "INSERT INTO atividade (rm_professor, id_professor_turma_materia, titulo, descricao, data_publicacao, prazo) VALUES
+    ('10002', 4, 'Formulário de contato', 'Monte um formulário de contato com validação.', '2026-11-03 10:00:00', NULL)";
+inserir($con, "atividade 5", $sql);
+
+$sql = "INSERT INTO atividade (rm_professor, id_professor_turma_materia, titulo, descricao, data_publicacao, prazo) VALUES
+    ('10002', 5, 'Exercícios de lógica', 'Resolva os problemas de fluxograma da página 12.', '2026-10-30 11:00:00', '2026-11-06 23:59:00')";
+inserir($con, "atividade 6", $sql);
+
+
+// ---------- material ----------
+$sql = "INSERT INTO material (id_professor_turma_materia, titulo, descricao, arquivo) VALUES
+    (1, 'Apostila de HTML', 'Material de apoio da primeira unidade.', 'uploads/apostila_html.pdf'),
+    (2, 'Slides de modelagem', 'Slides da aula de modelagem de dados.', 'uploads/slides_modelagem.pdf')";
+inserir($con, "material", $sql);
+
+
+// ---------- entrega ----------
+// atividade 1 do professor 10001 (Lista de exercícios de HTML)
+$sql = "INSERT INTO entrega (rm_professor, num_atividade, rm_aluno, arquivo, data_envio, nota) VALUES
+    ('10001', 1, '20001', 'uploads/entregas/20001_lista_html.pdf', '2026-11-11 20:10:00', 8.50),
+    ('10001', 1, '20002', 'uploads/entregas/20002_lista_html.pdf', '2026-11-12 18:45:00', NULL)";
+inserir($con, "entrega", $sql);
+
+
+// ---------- horario_aula ----------
+// dia_semana: 0=domingo ... 3=quarta, 5=sexta
+// A trigger recusa aula que se sobrepõe a outra da mesma turma.
+$sql = "INSERT INTO horario_aula (rm_professor, id_turma, materia, dia_semana, hora_inicio, hora_fim, sala) VALUES
+    ('10001', 1, 'Programação Web',      5, '07:30:00', '08:20:00', 'Lab 3'),
+    ('10001', 1, 'Programação Web',      5, '08:20:00', '09:10:00', 'Lab 3'),
+    ('10001', 2, 'Banco de Dados',       5, '09:30:00', '10:20:00', 'Sala 12'),
+    ('10002', 3, 'Programação Web',      5, '07:30:00', '08:20:00', 'Lab 2'),
+    ('10002', 2, 'Lógica de Programação',5, '10:20:00', '11:10:00', 'Sala 5'),
+    ('10001', 1, 'Programação Web',      3, '07:30:00', '08:20:00', 'Lab 3'),
+    ('10001', 2, 'Banco de Dados',       3, '08:20:00', '09:10:00', 'Sala 12'),
+    ('10002', 1, 'Banco de Dados',       3, '09:30:00', '10:20:00', 'Sala 8')";
+inserir($con, "horario_aula", $sql);
+
+
 
 $con->close();
 

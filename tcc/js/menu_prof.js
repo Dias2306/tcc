@@ -43,7 +43,7 @@
 
   // true  = usa dados de teste (funciona sem servidor)
   // false = busca no PHP (buscar_horarios.php)
-  const USAR_DADOS_TESTE = true;
+  const USAR_DADOS_TESTE = false;
  
   const dadosTeste = {
     aulas: [

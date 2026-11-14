@@ -16,27 +16,27 @@ if ($con->connect_error)
 
 $con->set_charset("utf8mb4");
 
-
+$tipos = [
     [
         "tipo"        => "aluno",
         "tabela"      => "aluno",
         "campo_rm"    => "rm",
         "campo_senha" => "senha",
-        "destino"     => "menu_aluno.php"
+        "destino"     => "../menu_aluno.php"
     ],
     [
         "tipo"        => "professor",
         "tabela"      => "professor",
         "campo_rm"    => "rm",
         "campo_senha" => "senha",
-        "destino"     => "index.php"
+        "destino"     => "../menu_professor2.html"
     ],
     [
         "tipo"        => "administracao",
         "tabela"      => "administracao",
         "campo_rm"    => "rm",
         "campo_senha" => "senha",
-        "destino"     => "cadastro.php"
+        "destino"     => "../cadastro.php"
     ]
 ];
 

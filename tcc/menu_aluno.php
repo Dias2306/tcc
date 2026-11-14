@@ -1,5 +1,5 @@
 <?php
-require 'verifica_login.php';
+require './banco/verifica_login.php';
 exigirLogin('aluno');   // 'professor' no index, 'administracao' no cadastro
 ?>
 
@@ -28,8 +28,8 @@ exigirLogin('aluno');   // 'professor' no index, 'administracao' no cadastro
   <div id="meuMenuLateral" class="lateral-menu">
     <a href="javascript:void(0)" class="botao-fechar" onclick="fecharMenu()">&times;</a>
     <a href="#">Perfil</a>
-    <a href="#">Atividades</a>
-    <a href="#">Material</a>
+    <a href="./atividade_alun.php">Atividades</a>
+    <a href="./material_alun.php">Material</a>
     <a href="#">Horário</a>
   </div>
 
