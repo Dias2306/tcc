@@ -1,20 +1,178 @@
-  body { font-family: Arial, sans-serif; background: #f1f1f5; margin: 0; padding: 40px 20px; }
-  .pagina { max-width: 720px; margin: 0 auto; }
+  body {
+    font-family: Arial, sans-serif;
+    background: #f1f1f5;
+    margin: 0;
+    padding: 40px 20px;
+  }
 
-  .cabecalho { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
-  h1 { color: #4f46e5; margin: 0; }
-  .usuario { font-size: 14px; color: #555; }
-  .usuario a { color: #4f46e5; margin-left: 8px; }
+  .pagina {
+    max-width: 720px;
+    margin: 0 auto;
+  }
 
-  .atividade { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,.12); border-left: 5px solid #4f46e5; }
-  .atividade.encerrada { border-left-color: #b5b5c8; opacity: .8; }
+  /* Topo: título à esquerda, nome e turma do aluno à direita */
+  .cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
 
-  .topo { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 8px; }
-  .materia { font-size: 12px; font-weight: bold; color: #4f46e5; background: #ecebff; padding: 4px 10px; border-radius: 20px; }
-  .selo { font-size: 12px; font-weight: bold; color: #888; }
+  h1 {
+    margin: 0;
+    color: #4f46e5;
+  }
 
-  .atividade h3 { margin: 0 0 8px; color: #222; }
-  .descricao { color: #444; font-size: 14px; line-height: 1.5; margin: 0 0 12px; }
-  .rodape { font-size: 13px; color: #777; display: flex; flex-wrap: wrap; gap: 4px 16px; }
+  .usuario {
+    font-size: 14px;
+    color: #555;
+  }
 
-  .vazio { text-align: center; color: #888; padding: 40px 0; }
+  .usuario a {
+    color: #4f46e5;
+    margin-left: 8px;
+  }
+
+  /* Cada atividade é um card */
+  .atividade {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    border-left: 5px solid #4f46e5;
+  }
+
+  /* Atividade com prazo vencido: mais clara */
+  .atividade.encerrada {
+    border-left-color: #b5b5c8;
+    opacity: 0.8;
+  }
+
+  .topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .materia {
+    font-size: 12px;
+    font-weight: bold;
+    color: #4f46e5;
+    background: #ecebff;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  .selo {
+    font-size: 12px;
+    font-weight: bold;
+    color: #888;
+  }
+
+  .atividade h3 {
+    margin: 0 0 8px;
+    color: #222;
+  }
+
+  .descricao {
+    margin: 0 0 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  .rodape {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    font-size: 13px;
+    color: #777;
+  }
+
+  .vazio {
+    text-align: center;
+    color: #888;
+    padding: 40px 0;
+  }
+
+  /* Link "voltar" e título da matéria (tela 2) */
+  .voltar {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: #4f46e5;
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  .subtitulo {
+    margin: 0 0 16px;
+    color: #222;
+  }
+
+  .subtitulo small {
+    margin-left: 8px;
+    font-size: 14px;
+    font-weight: normal;
+    color: #777;
+  }
+
+  .atividade .topo h3 {
+    margin: 0;
+  }
+
+  /* Cards das matérias (tela 1): ficam lado a lado e quebram de linha */
+  .grade {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+  }
+
+  .card-materia {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: #fff;
+    border-radius: 16px;
+    border-top: 5px solid #4f46e5;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    text-decoration: none;
+    color: #222;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .card-materia:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.18);
+  }
+
+  .card-materia .nome {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .card-materia .prof {
+    font-size: 13px;
+    color: #777;
+  }
+
+  .card-materia .contagem {
+    margin-top: 6px;
+    font-size: 14px;
+    color: #555;
+  }
+
+  .badge {
+    align-self: flex-start;
+    font-size: 12px;
+    font-weight: bold;
+    color: #b45309;
+    background: #fef3c7;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
