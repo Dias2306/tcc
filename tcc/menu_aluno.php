@@ -33,6 +33,35 @@ exigirLogin('aluno');   // 'professor' no index, 'administracao' no cadastro
     <a href="#">Horário</a>
   </div>
 
+  <main id="principal">
+    <section class="banner-hero">
+      <div class="marca-pae">
+        <h1>P.A.E.</h1>
+        <p>PROJETO DE AUXÍLIO ESCOLAR</p>
+      </div>
+
+      <div class="frase-hero">
+        <p>
+          PROMOVENDO<br>
+          EDUCAÇÃO ACESSÍVEL E<br>
+          APOIO CONTÍNUO PARA<br>
+          TRANSFORMAR O<br>
+          APRENDIZADO EM<br>
+          OPORTUNIDADE.
+        </p>
+      </div>
+    </section>
+
+    <section class="barra-atalhos">
+      <div class="lista-botoes">
+        <a href="#" class="card-atalho">FREQUÊNCIA</a>
+        <a href="./atividade_alun.php" class="card-atalho">ATIVIDADES</a>
+        <a href="./material_alun.php" class="card-atalho">MATERIAL</a>
+        <a href="#" class="card-atalho">HORÁRIO</a>
+      </div>
+    </section>
+  </main>
+
 </body>
 
 <script>
