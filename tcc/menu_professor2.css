@@ -1,7 +1,5 @@
 
-/* =================================
-   CONFIGURAÇÕES GERAIS
-================================= */
+/* CONFIGURAÇÕES GERAIS */
 
 :root {
     --azul: #000B36;
@@ -31,10 +29,7 @@ body {
     overflow-x: hidden;
 }
 
-
-/* =================================
-   CABEÇALHO
-================================= */
+/* CABEÇALHO */
 
 .cabecalho {
     width: 100%;
@@ -77,9 +72,7 @@ body {
 }
 
 
-/* =================================
-   CONTEÚDO PRINCIPAL
-================================= */
+/* CONTEÚDO PRINCIPAL */
 
 .principal {
     width: 100%;
@@ -90,9 +83,7 @@ body {
 }
 
 
-/* =================================
-   ÁREA SUPERIOR
-================================= */
+/* ÁREA SUPERIOR */
 
 .conteudo-superior {
     width: 100%;
@@ -104,9 +95,7 @@ body {
 }
 
 
-/* =================================
-   LOGO P.A.E.
-================================= */
+/* LOGO P.A.E. */
 
 .logo {
     width: 100%;
@@ -153,9 +142,7 @@ body {
 }
 
 
-/* =================================
-   CARDS INFORMATIVOS
-================================= */
+/* CARDS INFORMATIVOS */
 
 .informacoes {
     width: 100%;
@@ -205,9 +192,7 @@ body {
 }
 
 
-/* =================================
-   BOTÕES INFERIORES
-================================= */
+/* BOTÕES INFERIORES */
 
 .botoes {
     width: 100%;
@@ -261,9 +246,7 @@ body {
 }
 
 
-/* =================================
-   TELAS MENORES
-================================= */
+/* TELAS MENORES */
 
 @media (max-width: 700px) {
 
@@ -317,9 +300,7 @@ body {
 }
 
 
-/* =================================
-   ACESSIBILIDADE
-================================= */
+/* ACESSIBILIDADE */
 
 @media (prefers-reduced-motion: reduce) {
 
@@ -330,9 +311,7 @@ body {
         transition: none !important;
     }
 }
-/* =================================
-   CARDS CLICÁVEIS
-================================= */
+/* CARDS CLICÁVEIS */
 
 .card-info {
     text-decoration: none;
