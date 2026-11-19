@@ -6,7 +6,7 @@ function exigirLogin($tipo)
 {
     if (($_SESSION['tipo'] ?? '') !== $tipo)
     {
-        header("Location: login.html");
+        header("Location: ../login.html");
         exit();
     }
 }
