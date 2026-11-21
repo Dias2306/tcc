@@ -22,14 +22,14 @@ $tipos = [
         "tabela"      => "aluno",
         "campo_rm"    => "rm",
         "campo_senha" => "senha",
-        "destino"     => "../menu_aluno.php"
+        "destino"     => "../aluno/menu_aluno.php"
     ],
     [
         "tipo"        => "professor",
         "tabela"      => "professor",
         "campo_rm"    => "rm",
         "campo_senha" => "senha",
-        "destino"     => "../menu_professor2.html"
+        "destino"     => "../professor/menu_professor2.html"
     ],
     [
         "tipo"        => "administracao",
