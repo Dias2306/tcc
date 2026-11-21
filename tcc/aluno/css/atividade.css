@@ -1,0 +1,340 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #000000;
+  color: #FFFFFF;
+  font-family: "Segoe UI", Arial, sans-serif;
+  padding: 40px 25px;
+  overflow-x: hidden;
+}
+
+.pagina {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Topo: título à esquerda, nome e turma do aluno à direita */
+.cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 20px 28px;
+  margin-bottom: 30px;
+  background: linear-gradient(90deg, #060a30 0%, #0e175c 50%, #090e42 100%);
+  border: 1px solid rgba(29, 145, 242, 0.35);
+  border-bottom: 2px solid #1D91F2;
+  border-radius: 18px;
+}
+
+h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 28px;
+  font-weight: normal;
+  color: #FFFFFF;
+}
+
+.usuario {
+  font-size: 14px;
+  color: #A9B5D6;
+}
+
+.usuario a {
+  display: inline-block;
+  margin-left: 12px;
+  padding: 6px 14px;
+  background: rgba(29, 145, 242, 0.15);
+  color: #1D91F2;
+  text-decoration: none;
+  font-weight: 600;
+  border: 1px solid rgba(29, 145, 242, 0.45);
+  border-radius: 10px;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.usuario a:hover {
+  background: #1D91F2;
+  color: #FFFFFF;
+}
+
+/* Cards das matérias (tela 1) */
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 22px;
+}
+
+.card-materia {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 26px;
+  background: linear-gradient(
+    145deg,
+    rgba(42, 58, 107, 0.45),
+    rgba(8, 10, 36, 0.95)
+  );
+  border: 1px solid rgba(29, 145, 242, 0.35);
+  border-right: 4px solid #3936C9;
+  border-bottom: 4px solid #3936C9;
+  border-radius: 22px;
+  text-decoration: none;
+  color: #FFFFFF;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card-materia:hover {
+  transform: translateY(-4px);
+  border-color: #1D91F2;
+  box-shadow: 0 8px 25px rgba(29, 145, 242, 0.3);
+}
+
+.card-materia .nome {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 21px;
+  font-weight: normal;
+  color: #FFFFFF;
+}
+
+.card-materia .prof {
+  font-size: 13px;
+  color: #A9B5D6;
+}
+
+.card-materia .contagem {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #AFC8F5;
+}
+
+.badge {
+  align-self: flex-start;
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1D91F2;
+  background: rgba(29, 145, 242, 0.15);
+  border: 1px solid rgba(29, 145, 242, 0.45);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* Link "voltar" e título da matéria (tela 2) */
+.voltar {
+  display: inline-block;
+  margin-bottom: 18px;
+  padding: 8px 16px;
+  background-color: #050d3b;
+  color: #AFC8F5;
+  text-decoration: none;
+  font-size: 14px;
+  border: 1px solid #162b7a;
+  border-radius: 12px;
+  transition: border-color 0.25s ease, color 0.25s ease;
+}
+
+.voltar:hover {
+  border-color: #1D91F2;
+  color: #FFFFFF;
+}
+
+.subtitulo {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 26px;
+  font-weight: normal;
+  color: #FFFFFF;
+  padding-bottom: 14px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid rgba(29, 145, 242, 0.35);
+}
+
+.subtitulo small {
+  display: block;
+  margin-top: 4px;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  color: #A9B5D6;
+}
+
+/* Cada atividade é um card */
+.atividade {
+  padding: 26px;
+  margin-bottom: 20px;
+  background: linear-gradient(
+    145deg,
+    rgba(42, 58, 107, 0.45),
+    rgba(8, 10, 36, 0.95)
+  );
+  border: 1px solid rgba(29, 145, 242, 0.35);
+  border-left: 5px solid #1D91F2;
+  border-radius: 20px;
+}
+
+/* Atividade com prazo vencido */
+.atividade.encerrada {
+  border-left-color: #4a5578;
+  opacity: 0.72;
+}
+
+.topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.atividade .topo h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 20px;
+  font-weight: normal;
+  color: #FFFFFF;
+}
+
+.selo {
+  font-size: 12px;
+  font-weight: 600;
+  color: #A9B5D6;
+  background: rgba(169, 181, 214, 0.12);
+  border: 1px solid rgba(169, 181, 214, 0.3);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.descricao {
+  margin-bottom: 16px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #DCE4F7;
+}
+
+.rodape {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(29, 145, 242, 0.2);
+  font-size: 13px;
+  color: #A9B5D6;
+}
+
+.vazio {
+  text-align: center;
+  color: #A9B5D6;
+  padding: 50px 20px;
+  background: rgba(8, 10, 36, 0.85);
+  border: 1px dashed rgba(29, 145, 242, 0.35);
+  border-radius: 20px;
+}
+
+@media (max-width: 650px) {
+  body {
+    padding: 25px 15px;
+  }
+
+  .cabecalho {
+    padding: 18px 20px;
+  }
+}
+
+
+/* ENTREGA */
+
+/* Situação da atividade (no topo do card) */
+.status {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status.ok {
+  color: #3DDC84;
+  background: rgba(61, 220, 132, 0.12);
+  border: 1px solid rgba(61, 220, 132, 0.45);
+}
+
+.status.pendente {
+  color: #F5B83D;
+  background: rgba(245, 184, 61, 0.12);
+  border: 1px solid rgba(245, 184, 61, 0.45);
+}
+
+.status.encerrado {
+  color: #A9B5D6;
+  background: rgba(169, 181, 214, 0.12);
+  border: 1px solid rgba(169, 181, 214, 0.3);
+}
+
+/* Área do botão, abaixo do rodapé do card */
+.acoes {
+  margin-top: 18px;
+}
+
+/* Botão principal: "Entregar" */
+.botao-entrega {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 24px;
+  background: linear-gradient(90deg, #1D91F2, #3936C9);
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  border: 1px solid rgba(29, 145, 242, 0.6);
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(29, 145, 242, 0.25);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease,
+              background 0.25s ease, color 0.25s ease;
+}
+
+/* setinha depois do texto */
+.botao-entrega::after {
+  content: "→";
+  transition: transform 0.25s ease;
+}
+
+.botao-entrega:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(29, 145, 242, 0.45);
+  filter: brightness(1.12);
+}
+
+.botao-entrega:hover::after {
+  transform: translateX(4px);
+}
+
+.botao-entrega:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.botao-entrega:focus-visible {
+  outline: 2px solid #AFC8F5;
+  outline-offset: 3px;
+}
+
+/* Botão secundário: "Ver entrega" e "Ver atividade" (só olhar) */
+.botao-entrega.secundario {
+  color: #1D91F2;
+  background: rgba(29, 145, 242, 0.12);
+  border: 1px solid rgba(29, 145, 242, 0.45);
+  box-shadow: none;
+  filter: none;
+}
+
+.botao-entrega.secundario:hover {
+  color: #FFFFFF;
+  background: #1D91F2;
+  box-shadow: 0 8px 22px rgba(29, 145, 242, 0.35);
+}

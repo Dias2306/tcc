@@ -1,0 +1,335 @@
+/* =========================================================
+   menu.css — tela inicial do aluno (P.A.E.)
+   Paleta e estilo seguem a página inicial e a de atividades:
+   fundo azul-noite, cards escuros com borda índigo e detalhes em azul.
+   ========================================================= */
+
+:root {
+  --azul-noite:    #0b1450;
+  --azul-profundo: #060b2e;
+  --indigo:        #3a35c9;
+  --indigo-claro:  #5b54ff;
+  --azul:          #1a8cff;
+  --texto:         #ffffff;
+  --texto-suave:   #a9b8dd;
+
+  --fonte-titulo: Georgia, "Times New Roman", serif;
+  --fonte-texto:  "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ---------- Fundo da página ---------- */
+/* cor de base: se a página for maior que a tela, nunca aparece branco */
+html {
+  background: #060b1f;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;               /* o conteúdo se desloca quando o menu abre */
+  font-family: var(--fonte-texto);
+  color: var(--texto);
+  background:
+    radial-gradient(ellipse 60% 55% at 12% 45%, rgba(23, 92, 160, 0.75), transparent 70%),
+    radial-gradient(ellipse 50% 60% at 100% 100%, rgba(45, 35, 130, 0.55), transparent 70%),
+    linear-gradient(160deg, #0a1a3a 0%, #060b1f 55%, #0a0a24 100%);
+}
+
+/* grade discreta por cima do fundo */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+
+/* ---------- Topo ---------- */
+.cabecalho {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 76px;
+  padding: 0 clamp(20px, 7vw, 130px);
+  background: linear-gradient(90deg, #0b1048 0%, #1a2060 55%, #242c6a 100%);
+  border-bottom: 1px solid rgba(130, 150, 255, 0.25);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+}
+
+.cabecalho .texto h3 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+}
+
+/* botão do usuário (abre o menu lateral) */
+.botao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: rgba(26, 140, 255, 0.12);
+  border: 1px solid rgba(26, 140, 255, 0.45);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.botao:hover {
+  background: rgba(26, 140, 255, 0.22);
+  box-shadow: 0 0 18px rgba(26, 140, 255, 0.45);
+  transform: translateY(-1px);
+}
+
+.botao img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);   /* deixa o ícone branco, seja qual for a cor original */
+}
+
+
+/* ---------- Menu lateral (abre pela direita) ---------- */
+/* O JavaScript só muda o width (0 <-> 250px). Por isso não há
+   borda nem padding lateral no próprio menu: com width 0 ele precisa sumir. */
+.lateral-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  width: 0;
+  height: 100%;
+  padding-top: 76px;
+  overflow-x: hidden;
+  white-space: nowrap;
+  background: linear-gradient(180deg, #0a1140 0%, #060b2e 100%);
+  box-shadow: inset 1px 0 0 rgba(26, 140, 255, 0.6);
+  transition: width 0.3s ease;
+}
+
+.lateral-menu a {
+  display: block;
+  padding: 16px 28px;
+  font-family: var(--fonte-titulo);
+  font-size: 18px;
+  color: #c9d5f2;
+  text-decoration: none;
+  border-left: 3px solid transparent;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.lateral-menu a:hover {
+  color: #ffffff;
+  background: rgba(26, 140, 255, 0.12);
+  border-left-color: var(--azul);
+}
+
+.lateral-menu .botao-fechar {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  padding: 0 8px;
+  font-family: var(--fonte-texto);
+  font-size: 38px;
+  line-height: 1;
+  border-left: none;
+}
+
+
+/* ---------- Conteúdo principal ---------- */
+#principal {
+  position: relative;
+  z-index: 1;
+  transition: margin-right 0.3s ease;   /* acompanha a abertura do menu */
+}
+
+/* Destaque com o nome do projeto */
+.banner-hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: clamp(56px, 10vh, 100px) 20px 40px;
+  text-align: center;
+}
+
+/* linha luminosa no alto, como na página inicial */
+.banner-hero::before {
+  content: "";
+  position: absolute;
+  top: 28px;
+  left: 50%;
+  width: min(70%, 760px);
+  height: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, #1e6fd0 25%, #c9ccd6 50%, #1e6fd0 75%, transparent);
+  opacity: 0.8;
+}
+
+.marca-pae h1 {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: clamp(72px, 17vw, 230px);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 40px rgba(26, 140, 255, 0.25);
+}
+
+.marca-pae p {
+  margin: 18px 0 0;
+  font-size: 13px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+}
+
+/* bolinha azul antes do texto */
+.marca-pae p::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 12px;
+  border-radius: 50%;
+  background: var(--azul);
+  box-shadow: 0 0 10px var(--azul);
+}
+
+.frase-hero p {
+  margin: 0;
+  font-size: clamp(13px, 1.7vw, 17px);
+  line-height: 1.9;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+}
+
+
+/* ---------- Atalhos ---------- */
+.barra-atalhos {
+  position: relative;
+  padding: 24px 20px 80px;
+}
+
+/* linha luminosa embaixo */
+.barra-atalhos::after {
+  content: "";
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  width: min(55%, 620px);
+  height: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, #1e6fd0 30%, #c9ccd6 50%, #1e6fd0 70%, transparent);
+  opacity: 0.6;
+}
+
+.lista-botoes {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+  max-width: 1100px;
+  margin: 0 auto;
+  counter-reset: atalho;              /* numera os cards: 01, 02, 03, 04 */
+}
+
+.card-atalho {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 110px;
+  padding: 24px 16px 16px;
+  counter-increment: atalho;
+  font-family: var(--fonte-titulo);
+  font-size: 19px;
+  letter-spacing: 0.12em;
+  text-align: center;
+  color: var(--texto);
+  text-decoration: none;
+  background: var(--azul-profundo);
+  border: 2px solid #0b1138;
+  border-right: 4px solid var(--indigo);
+  border-bottom: 4px solid var(--indigo);
+  border-radius: 30px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.card-atalho::before {
+  content: "0" counter(atalho);
+  position: absolute;
+  top: 12px;
+  left: 22px;
+  font-family: var(--fonte-texto);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: #6f7fb0;
+}
+
+.card-atalho:hover,
+.card-atalho:focus-visible {
+  transform: translateY(-5px);
+  border-right-color: var(--indigo-claro);
+  border-bottom-color: var(--indigo-claro);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.55), 0 0 24px rgba(58, 53, 201, 0.55);
+  outline: none;
+}
+
+
+/* ---------- Telas menores ---------- */
+@media (max-width: 900px) {
+  .lista-botoes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .cabecalho {
+    height: 64px;
+  }
+
+  .cabecalho .texto h3 {
+    font-size: 24px;
+  }
+
+  .lateral-menu {
+    padding-top: 64px;
+  }
+
+  .marca-pae p {
+    letter-spacing: 0.2em;
+  }
+
+  .frase-hero p {
+    letter-spacing: 0.1em;
+  }
+
+  .lista-botoes {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* quem prefere menos movimento não vê as animações */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

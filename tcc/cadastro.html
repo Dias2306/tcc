@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<script>
+
+function limpa_formulário() {
+         
+            document.getElementById('rua').value=("");
+            document.getElementById('bairro').value=("");
+            document.getElementById('estado').value=("");
+        
+    }
+
+ function exibir(conteudo) {
+        if (!("erro" in conteudo)) {
+           
+            document.getElementById('rua').value=(conteudo.logradouro);
+            document.getElementById('bairro').value=(conteudo.bairro);
+            document.getElementById('estado').value=(conteudo.estado);
+            
+        } 
+        else {
+            
+            limpa_formulário_cep();
+            alert("CEP não encontrado.");
+        }
+    }
+        
+    function pesquisacep(valor){
+
+   
+        var cep = valor.replace(/\D/g, '');
+
+        if (cep != "") {
+
+          
+            var validacep = /^[0-9]{8}$/;
+
+       
+            if(validacep.test(cep)) {
+
+                var script = document.createElement('script');
+
+                script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=exibir';
+
+             
+                document.body.appendChild(script);
+
+            } 
+            else {
+                
+                limpa_formulário();
+                alert("Formato de CEP inválido.");
+            }
+        } 
+        else {
+            
+            limpa_formulário();
+        }
+    };
+
+    </script>
+    </head>
+
+    <body>
+
+    <style>
+
+        body{
+            background-color: #222232;
+            color: #fff; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form {
+          
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            color: #000;
+            margin: 10px;
+            padding:2px;
+            width: 500px;
+            height: 500px;
+            border-radius: 10px;
+        }
+
+        form {
+            text-align: center;
+     
+        }
+
+        form input{
+          
+            width: 300px;
+            margin: 4px;
+        }
+
+        form button{
+            width: 310px;
+            border: 1px solid #222;
+            background-color: #7bbdac;
+            border-radius: 10px;
+        }
+
+        form button:hover{
+            
+            background-color: #2f544b;
+            border: 1px solid #222;                                                                                                                                                         /* oi   oi*/
+            color: #fff;
+            
+        }
+
+      
+
+ 
+
+    </style>
+
+<div class="form">
+      <form method="post" action="cadastro.php">
+
+      <label > 
+        Nome:
+        
+      </label><br>
+      <input type="text" class="text" name="nome"><br>
+      <label > 
+        RM:
+      </label><br>
+       <input type="text" class="text" name="rm"><br>
+       <label > 
+        Senha:
+      </label><br>
+       <input type="text" class="text" name="senha"><br>
+  
+        <label class ="texto">Cep:
+        </label><br>
+        <input name="cep" type="text" id="cep" value="" size="10" maxlength="9"
+               onblur="pesquisacep(this.value);" /><br>
+        <label>Rua:
+       </label><br>
+       <input name="rua" type="text" id="rua" size="60" /><br>
+        <label>Bairro:
+      </label><br> 
+       <input name="bairro" type="text" id="bairro" size="40" /><br>
+        <label>Estado:
+       </label><br>
+       <input name="estado" type="text" id="estado" size="40" /><br>
+       <br>
+
+        <button type="submit">enviar</button>
+    
+      </form>
+
+      </div>
+
+</body>
+
+
+</html>
