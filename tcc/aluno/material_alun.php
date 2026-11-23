@@ -218,9 +218,9 @@ else
             <a class="botao" href="<?= h($mt['arquivo']) ?>" target="_blank" rel="noopener noreferrer">Abrir link</a>
           <?php else: ?>
             <?php if ($info['ver']): ?>
-              <a class="botao" href="./control/baixar_mat.php?id=<?= $id ?>&acao=ver" target="_blank">Visualizar</a>
+              <a class="botao" href="../arquivos/baixar_mat.php?id=<?= $id ?>&acao=ver" target="_blank">Visualizar</a>
             <?php endif; ?>
-            <a class="botao claro" href="./control/baixar_mat.php?id=<?= $id ?>&acao=baixar">Baixar</a>
+            <a class="botao claro" href="../arquivos/baixar_mat.php?id=<?= $id ?>&acao=baixar">Baixar</a>
           <?php endif; ?>
         </div>
 

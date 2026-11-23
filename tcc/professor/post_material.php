@@ -22,7 +22,7 @@ require './control/material.php'
   <?php if (count($opcoes) === 0): ?>
     <div class="aviso erro">Você ainda não está vinculado a nenhuma turma e matéria.</div>
   <?php else: ?>
-  <form method="post" action="./control/salvar_mat.php" enctype="multipart/form-data">
+  <form method="post" action="../arquivos/salvar_mat.php" enctype="multipart/form-data">
 
     <label>Turma e matéria
       <select name="id_ptm" required>

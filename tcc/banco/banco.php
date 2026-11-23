@@ -155,7 +155,7 @@ $sql = "CREATE TABLE atividade (
   id_professor_turma_materia  INT          NOT NULL,
   titulo                      VARCHAR(150) NOT NULL,
   descricao                   TEXT         NULL,
-  data_publicacao             DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  data_publicacao             TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   prazo                       DATETIME     NULL,
   PRIMARY KEY (rm_professor, num_atividade),
   FOREIGN KEY (rm_professor) REFERENCES professor(rm),
@@ -170,7 +170,7 @@ $sql = "CREATE TABLE  material (
     titulo                      VARCHAR(150) NOT NULL,
     descricao                   TEXT         NULL,
     arquivo                     VARCHAR(255) NOT NULL,
-    data_publicacao             DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    data_publicacao             TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id_material),
     FOREIGN KEY (id_professor_turma_materia) REFERENCES professor_turma_materia(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
@@ -183,7 +183,7 @@ $sql = "CREATE TABLE entrega (
   num_atividade  INT          NOT NULL,
   rm_aluno       CHAR(5)      NOT NULL,
   arquivo        VARCHAR(255) NOT NULL,
-  data_envio     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  data_envio     TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   nota           DECIMAL(4,2) NULL,
   PRIMARY KEY (id_entrega),
   UNIQUE (rm_professor, num_atividade, rm_aluno),
