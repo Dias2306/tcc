@@ -1,253 +1,286 @@
+/* =========================================================
+   servicos.css — página de serviços (P.A.E.)
+   Alinhada à paleta e estética do menu.css e menu_professor2.css
+   ========================================================= */
+
+:root {
+  --azul-noite:    #0b1450;
+  --azul-profundo: #060b2e;
+  --indigo:        #3a35c9;
+  --indigo-claro:  #5b54ff;
+  --azul:          #1a8cff;
+  --texto:         #ffffff;
+  --texto-suave:   #a9b8dd;
+
+  --fonte-titulo: Georgia, "Times New Roman", serif;
+  --fonte-texto:  "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+}
+
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background: #060b1f;
 }
 
 body {
-    min-height: 100vh;
-    background: #111;
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: var(--fonte-texto);
+  color: var(--texto);
+  background:
+    radial-gradient(ellipse 60% 55% at 12% 45%, rgba(23, 92, 160, 0.75), transparent 70%),
+    radial-gradient(ellipse 50% 60% at 100% 100%, rgba(45, 35, 130, 0.55), transparent 70%),
+    linear-gradient(160deg, #0a1a3a 0%, #060b1f 55%, #0a0a24 100%);
 }
 
-/* CABEÇALHO */
-
-.cabecalho {
-    height: 72px;
-    background: #2c2731;
-    display: flex;
-    align-items: center;
-    padding: 0 9%;
-    border-bottom: 1px solid #ffffff15;
+/* grade quadriculada discreta por cima do fundo */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
 }
 
-.cabecalho a {
-    color: white;
-    text-decoration: none;
-    font-size: clamp(20px, 2.2vw, 29px);
-}
-
-/* FUNDO PRINCIPAL */
-
+/* ---------- Container Principal ---------- */
 .pagina {
-    min-height: calc(100vh - 72px);
-    padding: 100px 3.5% 60px;
-    position: relative;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background:
-        radial-gradient(
-            ellipse at 80% 20%,
-            #000000,
-            transparent 45%
-        ),
-        linear-gradient(
-            135deg,
-            #11194D 0%,
-            #171D43 55%,
-            #000000 100%
-        );
+  position: fixed;
+  z-index: 1;
+  min-height: 100vh;
+  max-width: 1420px;
+  margin: 0 auto;
+  padding: 85px 28px 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-/* BOTÃO VOLTAR */
-
+/* ---------- Botão Voltar ---------- */
 .voltar {
-    position: absolute;
-    top: 24px;
-    left: 16px;
-
-    display: flex;
-    align-items: center;
-    gap: 8px;
-
-    padding: 8px 14px;
-    border-radius: 30px;
-    border: 1px solid #ffffff30;
-
-    background: #030e35;
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
-
-    transition: 0.2s;
+  position: fixed;
+  top: 24px;
+  left: 26px;
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: 14px;
+  background: rgba(6, 11, 46, 0.78);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(26, 140, 255, 0.45);
+  color: var(--texto);
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
 }
 
 .voltar span {
-    font-size: 25px;
-    line-height: 18px;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--azul);
 }
 
 .voltar:hover {
-    background: #075bff;
-    transform: translateX(-3px);
+  background: rgba(26, 140, 255, 0.2);
+  box-shadow: 0 0 18px rgba(26, 140, 255, 0.45);
+  transform: translateX(-3px);
 }
 
-/* ORGANIZAÇÃO DOS CARTÕES */
+/* ---------- Topo da Página ---------- */
+.topo-servicos {
+  position: relative;
+  text-align: center;
+  max-width: 680px;
+  margin-bottom: 48px;
+  padding-top: 18px;
+}
 
+/* linha luminosa no topo */
+.topo-servicos::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: min(90%, 540px);
+  height: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, #1e6fd0 25%, #c9ccd6 50%, #1e6fd0 75%, transparent);
+  opacity: 0.8;
+}
+
+.tag-pae {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+  margin-bottom: 12px;
+}
+
+.tag-pae::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--azul);
+  box-shadow: 0 0 10px var(--azul);
+}
+
+.topo-servicos h1 {
+  font-family: var(--fonte-titulo);
+  font-size: clamp(34px, 5vw, 54px);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--texto);
+  text-shadow: 0 0 35px rgba(26, 140, 255, 0.25);
+  margin-bottom: 12px;
+}
+
+.topo-servicos p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--texto-suave);
+}
+
+/* ---------- Grade dos Cartões ---------- */
 .cartoes {
-    width: 100%;
-    max-width: 2500px;
-
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: clamp(18px, 3.5vw, 50px);
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  counter-reset: servico;
 }
-
-/* CARTÕES */
 
 .cartao {
-    min-width: 0;
-    min-height: 100px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 22px 32px;
+  counter-increment: servico;
+  background: rgba(6, 11, 46, 0.88);
+  backdrop-filter: blur(6px);
+  border: 2px solid #0b1138;
+  border-right: 4px solid var(--indigo);
+  border-bottom: 4px solid var(--indigo);
+  border-radius: 28px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
 
-    display: flex;
-    flex-direction: column;
-
-    background: #030e35;
-    border: 1px solid #075bff;
-    border-radius: 34px;
-    overflow: hidden;
-
-    box-shadow: 0 15px 35px #00000035;
-    transition: 0.25s;
+/* numeração 01, 02, 03, 04 no canto superior esquerdo */
+.cartao::before {
+  content: "0" counter(servico);
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  font-family: var(--fonte-texto);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #6f7fb0;
 }
 
 .cartao:hover {
-    transform: translateY(-7px);
-    box-shadow: 0 20px 40px #00000055;
+  transform: translateY(-6px);
+  border-right-color: var(--indigo-claro);
+  border-bottom-color: var(--indigo-claro);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.6), 0 0 26px rgba(58, 53, 201, 0.5);
 }
 
-/* ÁREA SUPERIOR DOS CARTÕES */
-
+/* ---------- Ícone Superior ---------- */
 .imagem {
-    height: 200px;
-    flex-shrink: 0;
+  width: 88px;
+  height: 88px;
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(145deg, rgba(11, 20, 80, 0.9), rgba(6, 11, 46, 0.95));
+  border: 1px solid rgba(26, 140, 255, 0.45);
+  border-radius: 22px;
+  box-shadow: 0 0 20px rgba(26, 140, 255, 0.18);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    background: linear-gradient(
-        145deg,
-        #06194c,
-        #020a28
-    );
-
-    border: 1px solid #0b3eae;
-    border-radius: 32px;
+.cartao:hover .imagem {
+  transform: scale(1.05);
+  box-shadow: 0 0 24px rgba(26, 140, 255, 0.35);
 }
 
 .imagem span {
-    font-size: 55px;
+  font-size: 38px;
 }
 
-/* TÍTULOS */
-
+/* ---------- Título e Divisor ---------- */
 .cartao h2 {
-    margin: 24px 12px 20px;
-    text-align: center;
-
-    color: #8ec5ff;
-    font-size: clamp(25px, 1.5vw, 50px);
-    letter-spacing: 1px;
+  margin: 22px 0 14px;
+  text-align: center;
+  font-family: var(--fonte-titulo);
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--texto);
 }
 
-/* LINHAS DECORATIVAS */
-
-.linhas {
-    display: flex;
-    flex-direction: column;
-    gap: 13px;
-
-    padding: 0 8px;
-    margin-bottom: 18px;
+.divisor {
+  width: 44px;
+  height: 2px;
+  margin-bottom: 16px;
+  background: linear-gradient(90deg, var(--azul), var(--indigo-claro));
+  border-radius: 2px;
 }
 
-.linhas span {
-    width: 100%;
-    height: 1px;
-    background: #8ec5ff;
-}
-
-/* DESCRIÇÃO */
-
+/* ---------- Descrição ---------- */
 .cartao p {
-    padding: 0 18px;
-
-    color: #c5d9f5;
-    text-align: center;
-    font-size: 18px;
-    line-height: 1.5;
-
-    flex-grow: 1;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--texto-suave);
 }
 
-/* BOTÃO DOS CARTÕES */
-
-.botao {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    min-height: 43px;
-    margin: 20px 18px 22px;
-
-    border-radius: 9px;
-    background: linear-gradient(
-        100deg,
-        #243cbd,
-        #075bff
-    );
-
-    color: white;
-    font-size: 14px;
-    font-weight: bold;
-    text-decoration: none;
-
-    transition: 0.2s;
+/* ---------- Tablets ---------- */
+@media (max-width: 1024px) {
+  .cartoes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 720px;
+  }
 }
 
-.botao:hover {
-    filter: brightness(1.2);
-    transform: translateY(-2px);
-}
-
-/* TABLETS */
-
-@media (max-width: 1000px) {
-    .cartoes {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        max-width: 760px;
-        gap: 24px;
-    }
-}
-
-/* CELULARES */
-
+/* ---------- Celulares ---------- */
 @media (max-width: 560px) {
-    .cabecalho {
-        padding: 0 20px;
-        height: 64px;
-    }
+  .pagina {
+    padding: 85px 20px 50px;
+  }
 
-    .pagina {
-        padding: 85px 20px 40px;
-    }
+  .voltar {
+    top: 16px;
+    left: 16px;
+  }
 
-    .cartoes {
-        grid-template-columns: 1fr;
-        max-width: 360px;
-        gap: 22px;
-    }
+  .cartoes {
+    grid-template-columns: 1fr;
+    max-width: 380px;
+  }
+}
 
-    .cartao {
-        min-height: 370px;
-    }
-
-    .imagem {
-        height: 145px;
-    }
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
 }
