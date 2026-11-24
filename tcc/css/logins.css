@@ -214,10 +214,10 @@ body {
     content: "";
     position: absolute;
 
-    width: 450px;
-    height: 450px;
+    width: 500px;
+    height: 500px;
 
-    border: 1px solid #ffffff15;
+    border: 0px solid #ffffff67;
     border-radius: 50%;
 }
 
@@ -228,7 +228,7 @@ body {
     width: 600px;
     height: 600px;
 
-    border: 1px solid #ffffff10;
+    border: 2px solid #ffffff67;
     border-radius: 50%;
 }
 
