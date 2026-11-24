@@ -47,7 +47,7 @@ body::before {
 
 /* ---------- Container Principal ---------- */
 .pagina {
-  position: fixed;
+  position: relative;
   z-index: 1;
   min-height: 100vh;
   max-width: 1420px;
