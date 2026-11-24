@@ -1,0 +1,327 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #000000;
+  color: #FFFFFF;
+  font-family: "Segoe UI", Arial, sans-serif;
+  padding: 40px 25px;
+  overflow-x: hidden;
+}
+
+.pagina {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* Topo: título à esquerda, nome do professor à direita */
+.cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 20px 28px;
+  margin-bottom: 30px;
+  background: linear-gradient(90deg, #060a30 0%, #0e175c 50%, #090e42 100%);
+  border: 1px solid rgba(29, 145, 242, 0.35);
+  border-bottom: 2px solid #1D91F2;
+  border-radius: 18px;
+}
+
+h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 28px;
+  font-weight: normal;
+}
+
+.usuario {
+  font-size: 14px;
+  color: #A9B5D6;
+}
+
+.usuario a {
+  display: inline-block;
+  margin-left: 12px;
+  padding: 6px 14px;
+  background: rgba(29, 145, 242, 0.15);
+  color: #1D91F2;
+  text-decoration: none;
+  font-weight: 600;
+  border: 1px solid rgba(29, 145, 242, 0.45);
+  border-radius: 10px;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.usuario a:hover {
+  background: #1D91F2;
+  color: #FFFFFF;
+}
+
+/* Avisos (nota salva, erro) */
+.aviso {
+  margin-bottom: 22px;
+  padding: 14px 18px;
+  font-size: 14px;
+  border-radius: 14px;
+}
+
+.aviso.ok {
+  color: #3DDC84;
+  background: rgba(61, 220, 132, 0.12);
+  border: 1px solid rgba(61, 220, 132, 0.45);
+}
+
+.aviso.erro {
+  color: #FF7B7B;
+  background: rgba(255, 123, 123, 0.12);
+  border: 1px solid rgba(255, 123, 123, 0.45);
+}
+
+/* Caixa da atividade */
+.caixa {
+  padding: 28px;
+  margin-bottom: 26px;
+  background: linear-gradient(145deg, rgba(42, 58, 107, 0.45), rgba(8, 10, 36, 0.95));
+  border: 1px solid rgba(29, 145, 242, 0.35);
+  border-right: 4px solid #3936C9;
+  border-bottom: 4px solid #3936C9;
+  border-radius: 22px;
+}
+
+.etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.etiqueta {
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1D91F2;
+  background: rgba(29, 145, 242, 0.15);
+  border: 1px solid rgba(29, 145, 242, 0.45);
+  border-radius: 20px;
+}
+
+.etiqueta.turma {
+  color: #AFC8F5;
+  background: rgba(169, 181, 214, 0.1);
+  border-color: rgba(169, 181, 214, 0.3);
+}
+
+.caixa h2 {
+  margin-bottom: 10px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 26px;
+  font-weight: normal;
+}
+
+.descricao {
+  margin-bottom: 14px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #DCE4F7;
+}
+
+.rodape {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(29, 145, 242, 0.2);
+  font-size: 13px;
+  color: #A9B5D6;
+}
+
+/* Resumo: quantos entregaram e quantos foram corrigidos */
+.resumo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.resumo div {
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+  padding: 12px 18px;
+  background: rgba(8, 10, 36, 0.8);
+  border: 1px solid rgba(29, 145, 242, 0.3);
+  border-radius: 14px;
+}
+
+.resumo strong {
+  font-size: 22px;
+  color: #FFFFFF;
+}
+
+.resumo span {
+  font-size: 12px;
+  color: #A9B5D6;
+}
+
+/* Um card para cada aluno */
+.aluno {
+  display: grid;
+  grid-template-columns: 1.4fr 1.2fr auto auto;
+  align-items: center;
+  gap: 16px 22px;
+  padding: 18px 22px;
+  margin-bottom: 14px;
+  background: linear-gradient(145deg, rgba(42, 58, 107, 0.35), rgba(8, 10, 36, 0.95));
+  border: 1px solid rgba(29, 145, 242, 0.3);
+  border-left: 5px solid #1D91F2;
+  border-radius: 18px;
+  scroll-margin-top: 20px;
+}
+
+/* a linha do aluno recém-corrigido ganha destaque ao voltar do salvar_nota.php */
+.aluno:target {
+  border-color: #1D91F2;
+  box-shadow: 0 0 22px rgba(29, 145, 242, 0.35);
+}
+
+.quem strong {
+  display: block;
+  font-size: 16px;
+}
+
+.quem small,
+.situacao small {
+  display: block;
+  margin-top: 3px;
+  font-size: 12px;
+  color: #A9B5D6;
+}
+
+.status {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 20px;
+}
+
+.status.ok {
+  color: #3DDC84;
+  background: rgba(61, 220, 132, 0.12);
+  border: 1px solid rgba(61, 220, 132, 0.45);
+}
+
+.status.aguardando {
+  color: #F5B83D;
+  background: rgba(245, 184, 61, 0.12);
+  border: 1px solid rgba(245, 184, 61, 0.45);
+}
+
+.status.nao {
+  color: #A9B5D6;
+  background: rgba(169, 181, 214, 0.12);
+  border: 1px solid rgba(169, 181, 214, 0.3);
+}
+
+.arquivo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sem-entrega {
+  grid-column: 3 / -1;
+  font-size: 13px;
+  color: #7f8fb5;
+}
+
+/* Botões */
+.botao {
+  display: inline-block;
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #FFFFFF;
+  text-decoration: none;
+  background: linear-gradient(90deg, #1D91F2, #3936C9);
+  border: 1px solid rgba(29, 145, 242, 0.6);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, color 0.25s ease;
+}
+
+.botao:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(29, 145, 242, 0.4);
+}
+
+.botao.claro {
+  color: #1D91F2;
+  background: rgba(29, 145, 242, 0.12);
+  border-color: rgba(29, 145, 242, 0.45);
+}
+
+.botao.claro:hover {
+  color: #FFFFFF;
+  background: #1D91F2;
+}
+
+/* Formulário da nota */
+.nota {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.nota label {
+  display: block;
+  font-size: 12px;
+  color: #A9B5D6;
+}
+
+.nota input[type="number"] {
+  display: block;
+  width: 96px;
+  margin-top: 4px;
+  padding: 9px 10px;
+  font-size: 14px;
+  color: #FFFFFF;
+  background: #070b24;
+  border: 1px solid #1d3a7a;
+  border-radius: 10px;
+}
+
+.nota input[type="number"]:focus {
+  outline: none;
+  border-color: #1D91F2;
+  box-shadow: 0 0 0 3px rgba(29, 145, 242, 0.25);
+}
+
+.vazio {
+  padding: 50px 20px;
+  text-align: center;
+  color: #A9B5D6;
+  background: rgba(8, 10, 36, 0.85);
+  border: 1px dashed rgba(29, 145, 242, 0.35);
+  border-radius: 20px;
+}
+
+/* Telas menores: o card do aluno vira uma coluna */
+@media (max-width: 800px) {
+  body {
+    padding: 25px 15px;
+  }
+
+  .aluno {
+    grid-template-columns: 1fr;
+  }
+
+  .sem-entrega {
+    grid-column: auto;
+  }
+}

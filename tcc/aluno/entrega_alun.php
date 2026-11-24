@@ -171,7 +171,7 @@ $podeEnviar = !$encerrada && !$corrigida;
 
     <?php if ($podeEnviar): ?>
       <form method="post"
-            action="./control/salvar_ent.php?prof=<?= urlencode($prof) ?>&num=<?= $num ?>"
+            action="../arquivos/salvar_ent.php?prof=<?= urlencode($prof) ?>&num=<?= $num ?>"
             enctype="multipart/form-data">
 
         <!-- campo fixo: o salvar_entrega.php usa para saber que o formulário chegou inteiro -->

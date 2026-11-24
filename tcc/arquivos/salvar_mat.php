@@ -4,6 +4,9 @@ require '../banco/verifica_login.php';
 exigirLogin('professor');
 
 
+define('pagina_material',    '../professor/post_material.php');
+
+
 // ---------- Regras de envio ----------
 $tamanhoMaximo = 10 * 1024 * 1024;   // 10 MB
 
@@ -29,14 +32,14 @@ function voltar($tipo, $texto)
         $_SESSION['dados_material'] = $_POST;
     }
 
-    header('Location: ./postar_material.php');
+    header('Location:' . pagina_material);
     exit;
 }
 
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST')
 {
-    header('Location: ./postar_material.php');
+    header('Location:' . pagina_material);
     exit;
 }
 

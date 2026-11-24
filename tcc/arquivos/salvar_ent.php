@@ -1,10 +1,15 @@
 <?php
 
-require '../../banco/verifica_login.php';
+require '../banco/verifica_login.php';
 exigirLogin('aluno');
 
 // garante o horário de Brasília nas comparações de prazo
 date_default_timezone_set('America/Sao_Paulo');
+
+// Endereços para o navegador. Eles são relativos a ESTA pasta (tcc/aluno/control/),
+// por isso precisam do "../" para chegar em tcc/aluno/.
+define('PAGINA_ENTREGA',    '../aluno/entrega_alun.php');
+define('PAGINA_ATIVIDADES', '../aluno/atividade_alun.php');
 
 
 // ---------- Regras de envio ----------
@@ -22,7 +27,8 @@ $extensoesPermitidas = [
 $extensoesImagem = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
 
-
+// Em caso de ERRO: guarda o aviso e volta para a página da entrega,
+// para o aluno corrigir e tentar de novo.
 function voltar($tipo, $texto)
 {
     $prof = trim($_GET['prof'] ?? '');
@@ -32,11 +38,11 @@ function voltar($tipo, $texto)
 
     if ($prof !== '' && $num > 0)
     {
-        header('Location: ./entrega_alun.php?prof=' . urlencode($prof) . '&num=' . $num);
+        header('Location: ' . PAGINA_ENTREGA . '?prof=' . urlencode($prof) . '&num=' . $num);
     }
     else
     {
-        header('Location: ./atividade_alun.php');
+        header('Location: ' . PAGINA_ATIVIDADES);
     }
 
     exit;
@@ -45,7 +51,7 @@ function voltar($tipo, $texto)
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST')
 {
-    header('Location: ./atividade_alun.php');
+    header('Location: ' . PAGINA_ATIVIDADES);
     exit;
 }
 
@@ -56,7 +62,7 @@ if (!isset($_POST['enviar']) && ($_SERVER['CONTENT_LENGTH'] ?? 0) > 0)
 
 try
 {
-    require '../../banco/conexao.php';
+    require '../banco/conexao.php';
 }
 catch (mysqli_sql_exception $e)
 {
@@ -71,7 +77,7 @@ $num  = (int) ($_GET['num'] ?? 0);
 
 if ($prof === '' || $num === 0)
 {
-    header('Location: ./atividade_alun.php');
+    header('Location: ' . PAGINA_ATIVIDADES);
     exit;
 }
 
@@ -79,8 +85,9 @@ if ($prof === '' || $num === 0)
 try
 {
     // ---------- 2. A atividade é da turma deste aluno? ----------
+    // (também pega o id da matéria, para saber para onde voltar no final)
     $stmt = $con->prepare(
-        "SELECT a.prazo
+        "SELECT a.prazo, ptm.id AS id_materia
            FROM atividade a
            JOIN professor_turma_materia ptm ON ptm.id = a.id_professor_turma_materia
            JOIN aluno al ON al.id_turma = ptm.id_turma
@@ -92,7 +99,7 @@ try
 
     if (!$atividade)
     {
-        header('Location: ./atividade_alun.php');
+        header('Location: ' . PAGINA_ATIVIDADES);
         exit;
     }
 
@@ -159,6 +166,7 @@ if (in_array($extensao, $extensoesImagem, true) && @getimagesize($envio['tmp_nam
 }
 
 
+// ---------- 6. Guardar o arquivo ----------
 $pastaUploads  = __DIR__ . '/uploads';
 $pastaEntregas = $pastaUploads . '/entregas';
 
@@ -188,6 +196,7 @@ $caminho = 'uploads/entregas/' . $nomeNovo;
 $agora   = date('Y-m-d H:i:s');
 
 
+// ---------- 7. Gravar no banco ----------
 try
 {
     if ($entregaAnterior)
@@ -229,4 +238,14 @@ if ($entregaAnterior)
     }
 }
 
-voltar('ok', $entregaAnterior ? 'Entrega substituída com sucesso!' : 'Atividade entregue com sucesso!');
+
+// ---------- 9. Sucesso: volta para a tela de atividades da matéria ----------
+// O aviso verde fica numa chave própria da sessão (aviso_atividades) e é mostrado
+// pelo atividade_alun.php. O card da atividade já aparece como "Entregue".
+$_SESSION['aviso_atividades'] = [
+    'tipo'  => 'ok',
+    'texto' => $entregaAnterior ? 'Entrega substituída com sucesso!' : 'Atividade entregue com sucesso!'
+];
+
+header('Location: ' . PAGINA_ATIVIDADES . '?materia=' . (int) $atividade['id_materia']);
+exit;
