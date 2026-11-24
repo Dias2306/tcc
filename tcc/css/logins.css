@@ -24,7 +24,7 @@ body {
 .painel-login {
     width: 50%;
     min-height: 100vh;
-    background-color: #191919;
+    background-color: #000000;
 
     display: flex;
     align-items: center;
@@ -194,12 +194,11 @@ body {
     width: 50%;
     min-height: 100vh;
 
-    background: linear-gradient(
-        145deg,
-        #195779 0%,
-        #102d4d 48%,
-        #07112f 100%
-    );
+    background:        
+        radial-gradient(ellipse 60% 55% at 2% 15%, rgba(23, 92, 160, 0.75), transparent 70%),
+        radial-gradient(ellipse 70% 110% at 100% 100%, rgba(45, 35, 130, 0.55), transparent 70%),
+        linear-gradient(160deg, #0a1a3a 0%, #060b1f 55%, #0a0a24 100%);
+    
 
     display: flex;
     align-items: center;
