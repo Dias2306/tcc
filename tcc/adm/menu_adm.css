@@ -1,0 +1,256 @@
+:root {
+  --azul-noite:    #0b1450;
+  --azul-profundo: #060b2e;
+  --indigo:        #3a35c9;
+  --indigo-claro:  #5b54ff;
+  --azul:          #1a8cff;
+  --texto:         #ffffff;
+  --texto-suave:   #a9b8dd;
+
+  --fonte-titulo: Georgia, "Times New Roman", serif;
+  --fonte-texto:  "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background: #050816;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  font-family: var(--fonte-texto);
+  color: var(--texto);
+
+  /* Iluminação bilateral e centro profundo */
+  background:
+    radial-gradient(ellipse 45% 65% at 0% 35%, rgba(26, 140, 255, 0.34), transparent 72%),
+    radial-gradient(ellipse 45% 65% at 100% 75%, rgba(58, 53, 201, 0.42), transparent 72%),
+    linear-gradient(165deg, #081230 0%, #050816 50%, #080820 100%);
+}
+
+/* Grade quadriculada branca transparente */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ---------- Botão Flutuante Sair ---------- */
+.btn-sair {
+  position: fixed;
+  top: clamp(18px, 2.5vh, 30px);
+  right: clamp(20px, 2.8vw, 40px);
+  z-index: 20;
+  padding: 9px 20px;
+  border-radius: 14px;
+  background: rgba(6, 11, 46, 0.82);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(91, 84, 255, 0.45);
+  color: var(--texto);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.btn-sair:hover {
+  background: rgba(26, 140, 255, 0.22);
+  border-color: var(--azul);
+  box-shadow: 0 0 18px rgba(26, 140, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+/* ---------- Área Principal Adaptativa ---------- */
+#principal {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  width: 100%;
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: clamp(32px, 5vh, 64px) clamp(24px, 4vw, 72px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(30px, 4.5vh, 52px);
+}
+
+/* ---------- Bloco Central da Marca ---------- */
+.cabecalho-central {
+  position: relative;
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto;
+  padding-bottom: clamp(20px, 2.8vh, 30px);
+}
+
+/* Linha luminosa abaixo do título */
+.cabecalho-central::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: min(85%, 540px);
+  height: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, var(--azul), #ffffff, var(--indigo-claro), transparent);
+  opacity: 0.7;
+}
+
+.etiqueta-painel {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 6px 16px;
+  font-size: clamp(10px, 0.8vw, 12px);
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  color: var(--azul);
+  background: rgba(26, 140, 255, 0.12);
+  border: 1px solid rgba(26, 140, 255, 0.38);
+  border-radius: 20px;
+}
+
+.cabecalho-central h1 {
+  font-family: var(--fonte-titulo);
+  font-size: clamp(58px, 7.5vw, 104px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-shadow: 0 0 36px rgba(26, 140, 255, 0.3);
+}
+
+.cabecalho-central p {
+  margin-top: 12px;
+  font-size: clamp(13px, 1.05vw, 16px);
+  line-height: 1.6;
+  color: var(--texto-suave);
+}
+
+/* ---------- Grade de 5 Módulos (3 em cima + 2 centralizados embaixo) ---------- */
+.grade-modulos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(18px, 2.2vw, 30px);
+  width: 100%;
+}
+
+.modulo {
+  position: relative;
+  flex: 1 1 calc(33.333% - 30px);
+  min-width: 280px;
+  max-width: 470px;
+  min-height: clamp(175px, 22vh, 230px);
+  padding: clamp(22px, 2.8vh, 32px) clamp(22px, 2.2vw, 30px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-decoration: none;
+  color: var(--texto);
+  background: rgba(6, 11, 46, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(91, 84, 255, 0.35);
+  border-right: 4px solid var(--indigo);
+  border-bottom: 4px solid var(--indigo);
+  border-radius: 26px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.modulo:hover,
+.modulo:focus-visible {
+  transform: translateY(-6px);
+  background: rgba(11, 20, 80, 0.94);
+  border-color: rgba(26, 140, 255, 0.6);
+  border-right-color: var(--azul);
+  border-bottom-color: var(--azul);
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.65), 0 0 26px rgba(26, 140, 255, 0.3);
+  outline: none;
+}
+
+.modulo-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.numero {
+  font-family: var(--fonte-titulo);
+  font-size: clamp(18px, 1.5vw, 24px);
+  font-weight: 700;
+  color: var(--azul);
+}
+
+.tag {
+  padding: 4px 10px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--texto-suave);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+}
+
+.modulo h2 {
+  font-family: var(--fonte-titulo);
+  font-size: clamp(20px, 1.6vw, 26px);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+}
+
+.modulo p {
+  font-size: clamp(13px, 0.95vw, 15px);
+  line-height: 1.55;
+  color: var(--texto-suave);
+  margin-bottom: 16px;
+}
+
+.acao {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--azul);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.modulo:hover .acao {
+  color: #ffffff;
+  transform: translateX(4px);
+}
+
+/* ---------- Responsividade ---------- */
+@media (max-width: 640px) {
+  body {
+    padding-top: 48px;
+  }
+
+  .modulo {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
