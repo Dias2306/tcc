@@ -1,255 +1,362 @@
+:root {
+  --azul-noite:    #0b1450;
+  --azul-profundo: #060b2e;
+  --indigo:        #3a35c9;
+  --indigo-claro:  #5b54ff;
+  --azul:          #1a8cff;
+  --texto:         #ffffff;
+  --texto-suave:   #a9b8dd;
+
+  --fonte-titulo: Georgia, "Times New Roman", serif;
+  --fonte-texto:  "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+html {
+  background: #050816;
+}
+
 body {
+  position: relative;
   min-height: 100vh;
-  background-color: #000000;
-  color: #FFFFFF;
-  font-family: "Segoe UI", Arial, sans-serif;
-  padding: 40px 25px;
+  color: var(--texto);
+  font-family: var(--fonte-texto);
+  padding: clamp(28px, 4vh, 52px) clamp(18px, 4vw, 48px);
   overflow-x: hidden;
+
+  /* Laterais em azul/índigo e centro bem escuro */
+  background:
+    radial-gradient(ellipse 34% 75% at 0% 50%, rgba(26, 140, 255, 0.42), transparent 72%),
+    radial-gradient(ellipse 34% 75% at 100% 50%, rgba(58, 53, 201, 0.45), transparent 72%),
+    radial-gradient(ellipse 50% 60% at 50% 50%, #050816 45%, #070d26 100%);
+}
+
+/* Grade quadriculada branca transparente */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 48px 48px;
 }
 
 .pagina {
-  max-width: 900px;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: clamp(920px, 76vw, 1280px);
   margin: 0 auto;
 }
 
-/* Topo: título à esquerda, nome e turma do aluno à direita */
+/* ---------- Cabeçalho Superior ---------- */
 .cabecalho {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 12px;
-  padding: 20px 28px;
-  margin-bottom: 30px;
-  background: linear-gradient(90deg, #060a30 0%, #0e175c 50%, #090e42 100%);
-  border: 1px solid rgba(29, 145, 242, 0.35);
-  border-bottom: 2px solid #1D91F2;
-  border-radius: 18px;
+  gap: 14px;
+  padding: clamp(18px, 2.4vh, 26px) clamp(22px, 2.6vw, 34px);
+  margin-bottom: clamp(24px, 3.2vh, 36px);
+  background: rgba(6, 11, 46, 0.9);
+  backdrop-filter: blur(8px);
+  border: 2px solid #0b1138;
+  border-right: 4px solid var(--indigo);
+  border-bottom: 4px solid var(--indigo);
+  border-radius: 22px;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.55);
 }
 
 h1 {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 28px;
-  font-weight: normal;
-  color: #FFFFFF;
+  font-family: var(--fonte-titulo);
+  font-size: clamp(26px, 2.4vw, 36px);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--texto);
+  text-shadow: 0 0 24px rgba(26, 140, 255, 0.25);
 }
 
 .usuario {
-  font-size: 14px;
-  color: #A9B5D6;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: clamp(14px, 1vw, 16px);
+  color: var(--texto-suave);
 }
 
 .usuario a {
-  display: inline-block;
-  margin-left: 12px;
-  padding: 6px 14px;
-  background: rgba(29, 145, 242, 0.15);
-  color: #1D91F2;
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 18px;
+  background: rgba(26, 140, 255, 0.14);
+  color: var(--texto);
   text-decoration: none;
+  font-size: 14px;
   font-weight: 600;
-  border: 1px solid rgba(29, 145, 242, 0.45);
-  border-radius: 10px;
-  transition: background 0.25s ease, color 0.25s ease;
+  letter-spacing: 0.03em;
+  border: 1px solid rgba(26, 140, 255, 0.45);
+  border-radius: 14px;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .usuario a:hover {
-  background: #1D91F2;
-  color: #FFFFFF;
+  background: rgba(26, 140, 255, 0.28);
+  box-shadow: 0 0 18px rgba(26, 140, 255, 0.45);
+  transform: translateY(-2px);
 }
 
-/* Cards das matérias (tela 1) */
+/* ---------- Cards das Matérias (Tela 1) ---------- */
 .grade {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 22px;
+  grid-template-columns: repeat(auto-fill, minmax(clamp(260px, 22vw, 340px), 1fr));
+  gap: clamp(18px, 2.2vw, 28px);
 }
 
 .card-materia {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 26px;
-  background: linear-gradient(
-    145deg,
-    rgba(42, 58, 107, 0.45),
-    rgba(8, 10, 36, 0.95)
-  );
-  border: 1px solid rgba(29, 145, 242, 0.35);
-  border-right: 4px solid #3936C9;
-  border-bottom: 4px solid #3936C9;
-  border-radius: 22px;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: clamp(165px, 20vh, 210px);
+  padding: clamp(22px, 2.8vh, 32px) clamp(22px, 2.2vw, 30px);
+  background: rgba(6, 11, 46, 0.9);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(91, 84, 255, 0.35);
+  border-left: 4px solid var(--azul);
+  border-right: 4px solid var(--indigo);
+  border-bottom: 4px solid var(--indigo);
+  border-radius: 24px;
   text-decoration: none;
-  color: #FFFFFF;
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  color: var(--texto);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
 }
 
 .card-materia:hover {
-  transform: translateY(-4px);
-  border-color: #1D91F2;
-  box-shadow: 0 8px 25px rgba(29, 145, 242, 0.3);
+  transform: translateY(-5px);
+  background: rgba(11, 20, 80, 0.94);
+  border-color: rgba(26, 140, 255, 0.6);
+  border-right-color: var(--azul);
+  border-bottom-color: var(--azul);
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.65), 0 0 24px rgba(26, 140, 255, 0.28);
 }
 
 .card-materia .nome {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 21px;
-  font-weight: normal;
-  color: #FFFFFF;
+  font-family: var(--fonte-titulo);
+  font-size: clamp(20px, 1.6vw, 26px);
+  font-weight: 700;
+  color: var(--texto);
 }
 
 .card-materia .prof {
-  font-size: 13px;
-  color: #A9B5D6;
+  font-size: clamp(13px, 0.95vw, 15px);
+  color: var(--texto-suave);
 }
 
 .card-materia .contagem {
   margin-top: 8px;
-  font-size: 14px;
+  font-size: clamp(13px, 0.95vw, 15px);
   color: #AFC8F5;
 }
 
-.badge {
-  align-self: flex-start;
-  margin-top: 4px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #1D91F2;
-  background: rgba(29, 145, 242, 0.15);
-  border: 1px solid rgba(29, 145, 242, 0.45);
-  padding: 4px 12px;
-  border-radius: 20px;
-}
-
-/* Link "voltar" e título da matéria (tela 2) */
+/* ---------- Voltar e Título da Matéria (Tela 2) ---------- */
 .voltar {
-  display: inline-block;
-  margin-bottom: 18px;
-  padding: 8px 16px;
-  background-color: #050d3b;
-  color: #AFC8F5;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+  padding: 9px 18px;
+  background: rgba(6, 11, 46, 0.85);
+  backdrop-filter: blur(6px);
+  color: var(--texto);
   text-decoration: none;
   font-size: 14px;
-  border: 1px solid #162b7a;
-  border-radius: 12px;
-  transition: border-color 0.25s ease, color 0.25s ease;
+  font-weight: 500;
+  border: 1px solid rgba(26, 140, 255, 0.45);
+  border-radius: 14px;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .voltar:hover {
-  border-color: #1D91F2;
-  color: #FFFFFF;
+  background: rgba(26, 140, 255, 0.22);
+  box-shadow: 0 0 18px rgba(26, 140, 255, 0.4);
+  transform: translateX(-3px);
 }
 
 .subtitulo {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 26px;
-  font-weight: normal;
-  color: #FFFFFF;
-  padding-bottom: 14px;
-  margin-bottom: 22px;
-  border-bottom: 1px solid rgba(29, 145, 242, 0.35);
+  font-family: var(--fonte-titulo);
+  font-size: clamp(24px, 2.2vw, 32px);
+  font-weight: 700;
+  color: var(--texto);
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(91, 84, 255, 0.35);
 }
 
 .subtitulo small {
   display: block;
-  margin-top: 4px;
-  font-family: "Segoe UI", Arial, sans-serif;
-  font-size: 14px;
+  margin-top: 6px;
+  font-family: var(--fonte-texto);
+  font-size: clamp(13px, 1vw, 15px);
   font-weight: normal;
-  color: #A9B5D6;
+  color: var(--texto-suave);
 }
 
-/* Cada atividade é um card */
+/* ---------- Card de Cada Material (Tela 2) ---------- */
 .material {
-  padding: 26px;
+  position: relative;
+  padding: clamp(22px, 2.8vh, 32px) clamp(22px, 2.6vw, 34px);
   margin-bottom: 20px;
-  background: linear-gradient(
-    145deg,
-    rgba(42, 58, 107, 0.45),
-    rgba(8, 10, 36, 0.95)
-  );
-  border: 1px solid rgba(29, 145, 242, 0.35);
-  border-left: 5px solid #1D91F2;
-  border-radius: 20px;
+  background: rgba(6, 11, 46, 0.92);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(91, 84, 255, 0.35);
+  border-left: 5px solid var(--azul);
+  border-right: 4px solid var(--indigo);
+  border-bottom: 4px solid var(--indigo);
+  border-radius: 24px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Atividade com prazo vencido */
-.material.encerrada {
-  border-left-color: #4a5578;
-  opacity: 0.72;
+.material:hover {
+  transform: translateY(-2px);
+  border-color: rgba(26, 140, 255, 0.55);
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.65), 0 0 22px rgba(26, 140, 255, 0.18);
 }
 
 .topo {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
 .material .topo h3 {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 20px;
-  font-weight: normal;
-  color: #FFFFFF;
+  font-family: var(--fonte-titulo);
+  font-size: clamp(19px, 1.6vw, 24px);
+  font-weight: 700;
+  color: var(--texto);
 }
 
-.selo {
+/* Etiqueta do tipo de material (PDF, Link, Imagem, Vídeo...) */
+.tipo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
-  color: #A9B5D6;
-  background: rgba(169, 181, 214, 0.12);
-  border: 1px solid rgba(169, 181, 214, 0.3);
-  padding: 4px 12px;
-  border-radius: 20px;
+  letter-spacing: 0.04em;
+  color: var(--azul);
+  background: rgba(26, 140, 255, 0.14);
+  border: 1px solid rgba(26, 140, 255, 0.45);
+  white-space: nowrap;
 }
 
 .descricao {
-  margin-bottom: 16px;
-  font-size: 15px;
-  line-height: 1.6;
-  color: #DCE4F7;
+  margin-bottom: 18px;
+  font-size: clamp(14px, 1vw, 16px);
+  line-height: 1.65;
+  color: #dce4f7;
 }
 
+/* ---------- Botões de Ação (Abrir link, Visualizar, Baixar) ---------- */
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 22px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--azul-noite) 0%, var(--indigo) 100%);
+  border: 1px solid rgba(26, 140, 255, 0.55);
+  border-bottom: 3px solid var(--azul);
+  color: var(--texto);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease, background 0.2s ease;
+}
+
+.botao:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.14);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.5), 0 0 20px rgba(26, 140, 255, 0.4);
+}
+
+.botao.claro {
+  background: rgba(26, 140, 255, 0.14);
+  border: 1px solid rgba(26, 140, 255, 0.45);
+  color: var(--texto);
+  box-shadow: none;
+  filter: none;
+}
+
+.botao.claro:hover {
+  background: rgba(26, 140, 255, 0.28);
+  box-shadow: 0 0 18px rgba(26, 140, 255, 0.35);
+}
+
+/* ---------- Rodapé do Card ---------- */
 .rodape {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 20px;
-  padding-top: 12px;
-  border-top: 1px solid rgba(29, 145, 242, 0.2);
+  gap: 8px 24px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(91, 84, 255, 0.28);
   font-size: 13px;
-  color: #A9B5D6;
+  color: var(--texto-suave);
 }
 
+/* ---------- Tela Vazia ---------- */
 .vazio {
   text-align: center;
-  color: #A9B5D6;
-  padding: 50px 20px;
-  background: rgba(8, 10, 36, 0.85);
-  border: 1px dashed rgba(29, 145, 242, 0.35);
-  border-radius: 20px;
+  font-size: 16px;
+  color: var(--texto-suave);
+  padding: clamp(44px, 6vh, 68px) 24px;
+  background: rgba(6, 11, 46, 0.9);
+  backdrop-filter: blur(8px);
+  border: 2px solid #0b1138;
+  border-right: 4px solid var(--indigo);
+  border-bottom: 4px solid var(--indigo);
+  border-radius: 26px;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.6);
 }
 
-  .botao {
-    display: inline-block;
-    padding: 8px 16px;
-    border-radius: 8px;
-    background: #4f46e5;
-    color: #fff;
-    text-decoration: none;
-    font-size: 14px;
+/* ---------- Responsividade ---------- */
+@media (max-width: 650px) {
+  body {
+    padding: 24px 15px;
   }
 
-  .botao.claro {
-    background: #ecebff;
-    color: #4f46e5;
+  .cabecalho {
+    padding: 18px 20px;
   }
+}
 
-  .rodape {
-    font-size: 13px;
-    color: #777;
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
   }
+}
