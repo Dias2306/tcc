@@ -28,7 +28,7 @@ $mensagem = isset($_GET['ok']) ? 'Atividade postada com sucesso!' : '';
 $erro     = '';
 
 
-// PASSO 4: salvar a atividade quando o formulário é enviado
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
     $idPtm     = (int) ($_POST['id_ptm'] ?? 0);
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     }
     elseif ($prazo !== '')
     {
-        // o campo datetime-local envia algo como "2026-11-27T23:59"
+      
         $prazoSql = str_replace('T', ' ', $prazo) . ':00';
 
         if (strtotime($prazoSql) <= time())

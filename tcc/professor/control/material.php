@@ -1,6 +1,6 @@
 <?php
 
-// só o professor logado entra nesta página
+
 require '../banco/verifica_login.php';
 exigirLogin('professor');
 
@@ -13,7 +13,7 @@ catch (mysqli_sql_exception $e)
     die('Erro ao conectar no banco.');
 }
 
-// h() protege o texto que vem do banco antes de colocar na página
+
 function h($texto)
 {
     return htmlspecialchars($texto ?? '', ENT_QUOTES, 'UTF-8');
@@ -21,15 +21,14 @@ function h($texto)
 
 $rm = $_SESSION['rm'];
 
-// Aviso e dados digitados que o salvar_material.php deixou na sessão
-// (aparecem uma vez só e depois são apagados)
+
 $aviso = $_SESSION['aviso_material'] ?? null;
 $dados = $_SESSION['dados_material'] ?? [];
 unset($_SESSION['aviso_material'], $_SESSION['dados_material']);
 
 $tipoAtual = (($dados['tipo'] ?? 'arquivo') === 'link') ? 'link' : 'arquivo';
 
-// turmas e matérias em que este professor está vinculado
+
 $stmt = $con->prepare(
     "SELECT ptm.id, t.nome AS turma, m.nome AS materia
        FROM professor_turma_materia ptm

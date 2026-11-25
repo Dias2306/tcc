@@ -1,105 +1,4 @@
-<?php
-
-// Página de uma atividade: mostra os detalhes e permite ao aluno entregar.
-// Uso: entrega.php?prof=10001&num=2
-// (a atividade é identificada pelo professor + número da atividade)
-
-// Só o aluno logado entra nesta página
-require '../banco/verifica_login.php';
-exigirLogin('aluno');
-
-try
-{
-    require '../banco/conexao.php';
-}
-catch (mysqli_sql_exception $e)
-{
-    die('Erro ao conectar no banco.');
-}
-
-// h() protege o texto que vem do banco antes de colocar na página
-function h($texto)
-{
-    return htmlspecialchars($texto ?? '', ENT_QUOTES, 'UTF-8');
-}
-
-function formatarData($data)
-{
-    return $data ? date('d/m/Y H:i', strtotime($data)) : 'Sem prazo';
-}
-
-$rm   = $_SESSION['rm'];
-$prof = trim($_GET['prof'] ?? '');
-$num  = (int) ($_GET['num'] ?? 0);
-
-if ($prof === '' || $num === 0)
-{
-    header('Location: ./atividade_alun.php');
-    exit;
-}
-
-// Aviso que o salvar_entrega.php deixou na sessão (aparece uma vez só)
-$aviso = $_SESSION['aviso_entrega'] ?? null;
-unset($_SESSION['aviso_entrega']);
-
-
-// Nome e turma do aluno (aparecem no topo)
-$stmt = $con->prepare(
-    "SELECT al.nome, t.nome AS turma
-       FROM aluno al
-       JOIN turma t ON t.id_turma = al.id_turma
-      WHERE al.rm = ?"
-);
-$stmt->bind_param('s', $rm);
-$stmt->execute();
-$aluno = $stmt->get_result()->fetch_assoc();
-
-if (!$aluno)
-{
-    header('Location: logout.php');
-    exit;
-}
-
-
-// A atividade (só se for da turma do aluno)
-$stmt = $con->prepare(
-    "SELECT a.titulo, a.descricao, a.data_publicacao, a.prazo,
-            ptm.id AS id_materia, m.nome AS materia, p.nome AS professor
-       FROM atividade a
-       JOIN professor_turma_materia ptm ON ptm.id = a.id_professor_turma_materia
-       JOIN aluno al    ON al.id_turma = ptm.id_turma AND al.rm = ?
-       JOIN materia m   ON m.id_materia = ptm.id_materia
-       JOIN professor p ON p.rm = a.rm_professor
-      WHERE a.rm_professor = ? AND a.num_atividade = ?"
-);
-$stmt->bind_param('ssi', $rm, $prof, $num);
-$stmt->execute();
-$atividade = $stmt->get_result()->fetch_assoc();
-
-if (!$atividade)
-{
-    // atividade inexistente ou de outra turma
-    header('Location: ./atividade_alun.php');
-    exit;
-}
-
-
-// A entrega deste aluno (se já enviou)
-$stmt = $con->prepare(
-    "SELECT data_envio, nota
-       FROM entrega
-      WHERE rm_professor = ? AND num_atividade = ? AND rm_aluno = ?"
-);
-$stmt->bind_param('sis', $prof, $num, $rm);
-$stmt->execute();
-$entrega = $stmt->get_result()->fetch_assoc();
-
-
-// O que o aluno pode fazer agora?
-$encerrada  = $atividade['prazo'] && strtotime($atividade['prazo']) < time();
-$corrigida  = $entrega && $entrega['nota'] !== null;
-$podeEnviar = !$encerrada && !$corrigida;
-?>
+<?php require './control/entrega.php' ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -124,7 +23,7 @@ $podeEnviar = !$encerrada && !$corrigida;
     <div class="aviso <?= h($aviso['tipo']) ?>"><?= h($aviso['texto']) ?></div>
   <?php endif; ?>
 
-  <!-- Detalhes da atividade -->
+
   <div class="caixa">
     <span class="materia"><?= h($atividade['materia']) ?></span>
     <h2><?= h($atividade['titulo']) ?></h2>
@@ -140,7 +39,7 @@ $podeEnviar = !$encerrada && !$corrigida;
     </div>
   </div>
 
-  <!-- Entrega -->
+
   <div class="caixa">
     <h2>Sua entrega</h2>
 
@@ -174,7 +73,7 @@ $podeEnviar = !$encerrada && !$corrigida;
             action="../arquivos/salvar_ent.php?prof=<?= urlencode($prof) ?>&num=<?= $num ?>"
             enctype="multipart/form-data">
 
-        <!-- campo fixo: o salvar_entrega.php usa para saber que o formulário chegou inteiro -->
+       
         <input type="hidden" name="enviar" value="1">
 
         <label>

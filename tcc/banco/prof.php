@@ -14,7 +14,7 @@ if (!isset($_SESSION['rm'])) {
 try {
     require 'conexao.php';
 
-    $dia = (int) date('w'); // 0 = domingo ... 6 = sábado
+    $dia = (int) date('w'); 
 
     $stmt = $conn->prepare(
         "SELECT h.hora_inicio, h.hora_fim, h.materia, h.sala, t.nome AS turma

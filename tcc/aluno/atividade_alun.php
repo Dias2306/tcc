@@ -23,7 +23,7 @@ require './control/atv_alun.php'
 
   <?php if ($idMateria === 0): ?>
 
-    <!-- TELA 1: um card para cada matéria -->
+
     <?php if (count($materias) === 0): ?>
       <div class="vazio">Sua turma ainda não tem matérias cadastradas.</div>
     <?php endif; ?>
@@ -43,7 +43,7 @@ require './control/atv_alun.php'
 
   <?php else: ?>
 
-    <!-- TELA 2: atividades da matéria escolhida -->
+
     <a class="voltar" href="./atividade_alun.php">← Voltar às matérias</a>
 
     <h2 class="subtitulo">
@@ -59,7 +59,7 @@ require './control/atv_alun.php'
       <?php
         $encerrada = $a['prazo'] && strtotime($a['prazo']) < time();
 
-        // ENTREGA (passo 1): situação da atividade e texto do botão
+        
         $entregue = $a['id_entrega'] !== null;
 
         if ($entregue)
@@ -90,7 +90,7 @@ require './control/atv_alun.php'
       <div class="atividade <?= $encerrada ? 'encerrada' : '' ?>">
         <div class="topo">
           <h3><?= h($a['titulo']) ?></h3>
-          <!-- ENTREGA (passo 1): no lugar do selo "Encerrada" -->
+      
           <span class="status <?= $classe ?>"><?= h($status) ?></span>
         </div>
 
@@ -103,7 +103,6 @@ require './control/atv_alun.php'
           <span>Prazo: <?= formatarData($a['prazo']) ?></span>
         </div>
 
-        <!-- ENTREGA (passo 1): o botão leva para a página da entrega -->
         <div class="acoes">
           <a class="botao-entrega <?= $estilo ?>"
              href="./entrega_alun.php?prof=<?= urlencode($a['rm_professor']) ?>&num=<?= (int) $a['num_atividade'] ?>">

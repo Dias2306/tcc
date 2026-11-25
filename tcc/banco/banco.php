@@ -236,6 +236,31 @@ $sql = "CREATE TABLE IF NOT EXISTS horario_aula (
     CHECK (hora_fim > hora_inicio)
 );";
 criarTabela($con, "horario_aula", $sql);
+
+$sql = "CREATE TABLE IF NOT EXISTS presenca (
+    id_horario  INT        NOT NULL,
+    data_aula   DATE       NOT NULL,
+    rm_aluno    CHAR(5)    NOT NULL,
+    presente    TINYINT(1) NOT NULL DEFAULT 1,
+    PRIMARY KEY (id_horario, data_aula, rm_aluno),
+    FOREIGN KEY (id_horario) REFERENCES horario_aula(id_horario) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (rm_aluno)   REFERENCES aluno(rm)                ON DELETE CASCADE ON UPDATE CASCADE
+);";
+criarTabela($con, "presenca", $sql);
+
+$sql = "CREATE TABLE IF NOT EXISTS nota_bimestre (
+    id_professor_turma_materia  INT           NOT NULL,
+    bimestre                    TINYINT       NOT NULL,
+    rm_aluno                    CHAR(5)       NOT NULL,
+    nota                        DECIMAL(4,2)  NOT NULL,
+    data_lancamento             TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id_professor_turma_materia, bimestre, rm_aluno),
+    FOREIGN KEY (id_professor_turma_materia) REFERENCES professor_turma_materia(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (rm_aluno)                   REFERENCES aluno(rm)                   ON DELETE CASCADE ON UPDATE CASCADE,
+    CHECK (bimestre BETWEEN 1 AND 4),
+    CHECK (nota >= 0 AND nota <= 10)
+);";
+criarTabela($con, "nota_bimestre", $sql);
  
  
 $con->query("DROP PROCEDURE IF EXISTS verificar_conflito_turma");
@@ -425,14 +450,48 @@ inserir($con, "entrega", $sql);
 // dia_semana: 0=domingo ... 3=quarta, 5=sexta
 // A trigger recusa aula que se sobrepõe a outra da mesma turma.
 $sql = "INSERT INTO horario_aula (rm_professor, id_turma, materia, dia_semana, hora_inicio, hora_fim, sala) VALUES
-    ('10001', 1, 'Programação Web',      5, '07:30:00', '08:20:00', 'Lab 3'),
-    ('10001', 1, 'Programação Web',      5, '08:20:00', '09:10:00', 'Lab 3'),
-    ('10001', 2, 'Banco de Dados',       5, '09:30:00', '10:20:00', 'Sala 12'),
-    ('10002', 3, 'Programação Web',      5, '07:30:00', '08:20:00', 'Lab 2'),
-    ('10002', 2, 'Lógica de Programação',5, '10:20:00', '11:10:00', 'Sala 5'),
-    ('10001', 1, 'Programação Web',      3, '07:30:00', '08:20:00', 'Lab 3'),
-    ('10001', 2, 'Banco de Dados',       3, '08:20:00', '09:10:00', 'Sala 12'),
-    ('10002', 1, 'Banco de Dados',       3, '09:30:00', '10:20:00', 'Sala 8')";
+
+    -- domingo (0)
+    ('10001', 1, 'Programação Web',       0, '13:00:00', '13:50:00', 'Lab 3'),
+    ('10001', 2, 'Banco de Dados',        0, '14:00:00', '14:50:00', 'Sala 12'),
+    ('10002', 3, 'Programação Web',       0, '13:00:00', '13:50:00', 'Lab 2'),
+    ('10002', 2, 'Lógica de Programação', 0, '16:00:00', '16:50:00', 'Sala 5'),
+
+    -- segunda (1)
+    ('10001', 1, 'Programação Web',       1, '13:00:00', '13:50:00', 'Lab 3'),
+    ('10001', 2, 'Banco de Dados',        1, '14:00:00', '14:50:00', 'Sala 12'),
+    ('10002', 3, 'Programação Web',       1, '13:00:00', '13:50:00', 'Lab 2'),
+    ('10002', 2, 'Lógica de Programação', 1, '16:00:00', '16:50:00', 'Sala 5'),
+
+    -- terça (2)
+    ('10001', 1, 'Programação Web',       2, '13:00:00', '13:50:00', 'Lab 3'),
+    ('10001', 2, 'Banco de Dados',        2, '14:00:00', '14:50:00', 'Sala 12'),
+    ('10002', 3, 'Programação Web',       2, '13:00:00', '13:50:00', 'Lab 2'),
+    ('10002', 2, 'Lógica de Programação', 2, '16:00:00', '16:50:00', 'Sala 5'),
+
+    -- quarta (3)
+    ('10001', 1, 'Programação Web',       3, '13:00:00', '13:50:00', 'Lab 3'),
+    ('10001', 2, 'Banco de Dados',        3, '14:00:00', '14:50:00', 'Sala 12'),
+    ('10002', 3, 'Programação Web',       3, '13:00:00', '13:50:00', 'Lab 2'),
+    ('10002', 2, 'Lógica de Programação', 3, '16:00:00', '16:50:00', 'Sala 5'),
+
+    -- quinta (4)
+    ('10001', 1, 'Programação Web',       4, '13:00:00', '13:50:00', 'Lab 3'),
+    ('10001', 2, 'Banco de Dados',        4, '14:00:00', '14:50:00', 'Sala 12'),
+    ('10002', 3, 'Programação Web',       4, '13:00:00', '13:50:00', 'Lab 2'),
+    ('10002', 2, 'Lógica de Programação', 4, '16:00:00', '16:50:00', 'Sala 5'),
+
+    -- sexta (5)
+    ('10001', 1, 'Programação Web',       5, '13:00:00', '13:50:00', 'Lab 3'),
+    ('10001', 2, 'Banco de Dados',        5, '14:00:00', '14:50:00', 'Sala 12'),
+    ('10002', 3, 'Programação Web',       5, '13:00:00', '13:50:00', 'Lab 2'),
+    ('10002', 2, 'Lógica de Programação', 5, '16:00:00', '16:50:00', 'Sala 5'),
+
+    -- sábado (6)
+    ('10001', 1, 'Programação Web',       6, '13:00:00', '13:50:00', 'Lab 3'),
+    ('10001', 2, 'Banco de Dados',        6, '14:00:00', '14:50:00', 'Sala 12'),
+    ('10002', 3, 'Programação Web',       6, '13:00:00', '13:50:00', 'Lab 2'),
+    ('10002', 2, 'Lógica de Programação', 6, '16:00:00', '16:50:00', 'Sala 5');";
 inserir($con, "horario_aula", $sql);
 
 
