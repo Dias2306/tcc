@@ -1,77 +1,312 @@
-<?php
-require './control/material.php'
-?>
+:root {
+  --azul-noite:    #0b1450;
+  --azul-profundo: #060b2e;
+  --indigo:        #3a35c9;
+  --indigo-claro:  #5b54ff;
+  --azul:          #1a8cff;
+  --texto:         #ffffff;
+  --texto-suave:   #a9b8dd;
 
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Postar material</title>
-<link rel="stylesheet" href="./css/post_mat.css">
-</head>
-<body>
-<div class="caixa">
-  <h2>Postar material</h2>
+  --fonte-titulo: Georgia, "Times New Roman", serif;
+  --fonte-texto:  "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+}
 
-  <?php if ($aviso): ?>
-    <div class="aviso <?= h($aviso['tipo']) ?>"><?= h($aviso['texto']) ?></div>
-  <?php endif; ?>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
+html {
+  background: #050816;
+}
 
-  <?php if (count($opcoes) === 0): ?>
-    <div class="aviso erro">Você ainda não está vinculado a nenhuma turma e matéria.</div>
-  <?php else: ?>
-  <form method="post" action="../arquivos/salvar_mat.php" enctype="multipart/form-data">
+body {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: var(--fonte-texto);
+  color: var(--texto);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(28px, 4vh, 56px) clamp(18px, 4vw, 48px);
 
-    <label>Turma e matéria
-      <select name="id_ptm" required>
-        <option value="">Selecione...</option>
-        <?php foreach ($opcoes as $op): ?>
-          <option value="<?= (int) $op['id'] ?>"
-            <?= ((int) ($dados['id_ptm'] ?? 0) === (int) $op['id']) ? 'selected' : '' ?>>
-            <?= h($op['turma']) ?> — <?= h($op['materia']) ?>
-          </option>
-        <?php endforeach; ?>
-      </select>
-    </label>
+  /* Laterais em azul/índigo e centro bem escuro */
+  background:
+    radial-gradient(ellipse 34% 75% at 0% 50%, rgba(26, 140, 255, 0.42), transparent 72%),
+    radial-gradient(ellipse 34% 75% at 100% 50%, rgba(58, 53, 201, 0.45), transparent 72%),
+    radial-gradient(ellipse 50% 60% at 50% 50%, #050816 45%, #070d26 100%);
+}
 
-    <label>Título
-      <input type="text" name="titulo" maxlength="150" required value="<?= h($dados['titulo'] ?? '') ?>">
-    </label>
+/* Grade quadriculada branca transparente */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
 
-    <label>Descrição
-      <textarea name="descricao"><?= h($dados['descricao'] ?? '') ?></textarea>
-    </label>
+/* ---------- Botão Voltar (caso tenha no topo) ---------- */
+.voltar {
+  position: fixed;
+  top: clamp(18px, 2.5vh, 28px);
+  left: clamp(18px, 2.5vw, 32px);
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: 14px;
+  background: rgba(6, 11, 46, 0.82);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(26, 140, 255, 0.45);
+  color: var(--texto);
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
 
-    
-    <div class="tipo">
-      <label><input type="radio" name="tipo" value="arquivo" <?= $tipoAtual === 'arquivo' ? 'checked' : '' ?>> Enviar arquivo</label>
-      <label><input type="radio" name="tipo" value="link" <?= $tipoAtual === 'link' ? 'checked' : '' ?>> Link de vídeo</label>
-    </div>
+.voltar:hover {
+  background: rgba(26, 140, 255, 0.22);
+  box-shadow: 0 0 18px rgba(26, 140, 255, 0.45);
+  transform: translateX(-3px);
+}
 
-    <div id="bloco-arquivo">
-      <label>Arquivo
-        <input type="file" name="arquivo" id="campo-arquivo" required
-               accept=".pdf,.doc,.docx,.ppt,.pptx,.zip,.jpg,.jpeg,.png,.gif,.webp,.mp4,.webm">
-        <span class="dica">PDF, Word, PowerPoint, imagem, vídeo ou ZIP. Máximo de 10 MB.</span>
-      </label>
-    </div>
+/* ---------- Card Central do Formulário ---------- */
+.caixa {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: clamp(480px, 44vw, 640px);
+  padding: clamp(26px, 3.6vh, 42px) clamp(24px, 3vw, 40px);
+  background: rgba(6, 11, 46, 0.92);
+  backdrop-filter: blur(8px);
+  border: 2px solid #0b1138;
+  border-right: 4px solid var(--indigo);
+  border-bottom: 4px solid var(--indigo);
+  border-radius: 28px;
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.7),
+    0 0 32px rgba(26, 140, 255, 0.14);
+}
 
-    <div id="bloco-link" style="display:none">
-      <label>Link do vídeo
-        <input type="url" name="link" id="campo-link" placeholder="https://www.youtube.com/watch?v=..." value="<?= h($dados['link'] ?? '') ?>">
-        <span class="dica">Para vídeos grandes, prefira colar o link (YouTube, Google Drive etc.).</span>
-      </label>
-    </div>
+/* Linha luminosa discreta no topo do card */
+.caixa::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 65%;
+  height: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, var(--azul), #ffffff, var(--indigo-claro), transparent);
+  opacity: 0.75;
+}
 
-    <button type="submit">Postar</button>
+/* ---------- Título ---------- */
+h2 {
+  margin: 0 0 clamp(18px, 2.5vh, 26px);
+  font-family: var(--fonte-titulo);
+  font-size: clamp(24px, 2.2vw, 32px);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--texto);
+  text-shadow: 0 0 24px rgba(26, 140, 255, 0.25);
+}
 
-  </form>
-  <?php endif; ?>
-</div>
+/* ---------- Avisos / Alertas (caso exiba $aviso) ---------- */
+.aviso, .alerta, .mensagem {
+  padding: 12px 16px;
+  margin-bottom: 18px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--texto);
+  background: rgba(26, 140, 255, 0.14);
+  border: 1px solid rgba(26, 140, 255, 0.45);
+  border-left: 4px solid var(--azul);
+}
 
-<script src="./js/post_mat.js" ></script>
+/* ---------- Labels e Campos ---------- */
+label {
+  display: block;
+  font-size: clamp(13px, 0.95vw, 15px);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  margin-bottom: clamp(14px, 2vh, 20px);
+  color: var(--texto-suave);
+}
 
-</body>
-</html>
+input[type="text"],
+input[type="url"],
+input[type="file"],
+select,
+textarea {
+  width: 100%;
+  padding: clamp(10px, 1.3vh, 14px) 14px;
+  margin-top: 7px;
+  font-family: var(--fonte-texto);
+  font-size: clamp(14px, 0.95vw, 15px);
+  color: var(--texto);
+  background: rgba(11, 20, 80, 0.55);
+  border: 1px solid rgba(91, 84, 255, 0.38);
+  border-radius: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+input[type="text"]::placeholder,
+input[type="url"]::placeholder,
+textarea::placeholder {
+  color: #6f7fb0;
+}
+
+input[type="text"]:focus,
+input[type="url"]:focus,
+input[type="file"]:focus,
+select:focus,
+textarea:focus {
+  background: rgba(11, 20, 80, 0.85);
+  border-color: var(--azul);
+  box-shadow: 0 0 16px rgba(26, 140, 255, 0.28);
+}
+
+/* Opções do select no tema escuro */
+select option {
+  background: #060b2e;
+  color: var(--texto);
+}
+
+/* Botão interno do input file */
+input[type="file"]::file-selector-button {
+  margin-right: 12px;
+  padding: 7px 14px;
+  border: 1px solid rgba(26, 140, 255, 0.5);
+  border-radius: 10px;
+  background: rgba(26, 140, 255, 0.16);
+  color: var(--texto);
+  font-family: var(--fonte-texto);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background: rgba(26, 140, 255, 0.3);
+  border-color: var(--azul);
+}
+
+textarea {
+  min-height: clamp(95px, 13vh, 135px);
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* ---------- Escolha entre Arquivo e Link ---------- */
+.tipo {
+  display: flex;
+  gap: 14px;
+  margin-bottom: clamp(14px, 2vh, 20px);
+  font-size: 14px;
+  color: var(--texto);
+}
+
+.tipo label {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+  padding: 11px 14px;
+  background: rgba(11, 20, 80, 0.45);
+  border: 1px solid rgba(91, 84, 255, 0.35);
+  border-radius: 14px;
+  color: var(--texto-suave);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+.tipo label:hover {
+  background: rgba(26, 140, 255, 0.14);
+  border-color: var(--azul);
+  color: var(--texto);
+}
+
+.tipo input[type="radio"] {
+  accent-color: var(--azul);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* ---------- Dica ---------- */
+.dica {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #7e8ec0;
+}
+
+/* ---------- Botão Principal de Envio ---------- */
+button {
+  width: 100%;
+  margin-top: 6px;
+  padding: clamp(13px, 1.6vh, 16px) 20px;
+  font-family: var(--fonte-titulo);
+  font-size: clamp(16px, 1.15vw, 19px);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--texto);
+  background: linear-gradient(135deg, var(--azul-noite) 0%, var(--indigo) 100%);
+  border: 1px solid rgba(26, 140, 255, 0.5);
+  border-right: 4px solid var(--azul);
+  border-bottom: 4px solid var(--azul);
+  border-radius: 18px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.12);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.55), 0 0 22px rgba(26, 140, 255, 0.4);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* ---------- Responsividade Celulares ---------- */
+@media (max-width: 560px) {
+  body {
+    padding: 72px 16px 32px;
+  }
+
+  .caixa {
+    padding: 24px 18px;
+    border-radius: 22px;
+  }
+
+  .tipo {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
