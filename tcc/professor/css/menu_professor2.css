@@ -13,6 +13,7 @@
 
 * {
   box-sizing: border-box;
+
 }
 
 html {
@@ -39,8 +40,8 @@ body::before {
   z-index: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.13) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.13) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.048) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.048) 1px, transparent 1px);
   background-size: 48px 48px;
 }
 
@@ -125,7 +126,7 @@ body::before {
   position: relative;
   z-index: 1;
   min-height: 100vh;
-  display: flex;
+  display: grid;
   flex-direction: column;
   justify-content: center;
   transition: margin-right 0.3s ease;
@@ -138,9 +139,9 @@ body::before {
   display: grid;
   grid-template-columns: 1.05fr 1fr;
   align-items: center;
-  gap: 44px;
+  gap: 244px;
   width: 100%;
-  max-width: 1140px;
+  max-width: 11401px;
   margin: 0 auto;
   padding: clamp(56px, 8vh, 85px) 24px 36px;
 }
