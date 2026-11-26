@@ -12,7 +12,7 @@ require './control/post.php'
 </head>
 <body>
 
-<button><a href="login.html">voltar</a> </button>
+<button><a href="./menu_professor2.html">voltar</a> </button>
 <div class="caixa">
   <h2>Postar atividade</h2>
 

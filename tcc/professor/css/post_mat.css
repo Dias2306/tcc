@@ -31,7 +31,6 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 24px;
   padding: clamp(28px, 4vh, 56px) clamp(18px, 4vw, 48px);
 
   /* Laterais em azul/índigo e centro bem escuro */
@@ -54,7 +53,7 @@ body::before {
   background-size: 48px 48px;
 }
 
-/* ---------- Botão Voltar (do seu HTML original) ---------- */
+/* ---------- Botão Voltar (caso tenha no topo) ---------- */
 body > button {
   position: fixed;
   top: clamp(18px, 2.5vh, 28px);
@@ -109,7 +108,7 @@ body > button:hover {
     0 0 32px rgba(26, 140, 255, 0.14);
 }
 
-/* Linha luminosa no topo do card */
+/* Linha luminosa discreta no topo do card */
 .caixa::before {
   content: "";
   position: absolute;
@@ -133,28 +132,17 @@ h2 {
   text-shadow: 0 0 24px rgba(26, 140, 255, 0.25);
 }
 
-/* ---------- Avisos (Sucesso e Erro) ---------- */
-.aviso {
+/* ---------- Avisos / Alertas (caso exiba $aviso) ---------- */
+.aviso, .alerta, .mensagem {
   padding: 12px 16px;
-  border-radius: 14px;
   margin-bottom: 18px;
+  border-radius: 14px;
   font-size: 14px;
   line-height: 1.5;
   color: var(--texto);
-}
-
-.aviso.ok {
-  background: rgba(16, 185, 129, 0.14);
-  border: 1px solid rgba(16, 185, 129, 0.45);
-  border-left: 4px solid #10b981;
-  color: #a7f3d0;
-}
-
-.aviso.erro {
-  background: rgba(239, 68, 68, 0.14);
-  border: 1px solid rgba(239, 68, 68, 0.45);
-  border-left: 4px solid #ef4444;
-  color: #fecaca;
+  background: rgba(26, 140, 255, 0.14);
+  border: 1px solid rgba(26, 140, 255, 0.45);
+  border-left: 4px solid var(--azul);
 }
 
 /* ---------- Labels e Campos ---------- */
@@ -167,7 +155,9 @@ label {
   color: var(--texto-suave);
 }
 
-input,
+input[type="text"],
+input[type="url"],
+input[type="file"],
 select,
 textarea {
   width: 100%;
@@ -180,16 +170,18 @@ textarea {
   border: 1px solid rgba(91, 84, 255, 0.38);
   border-radius: 14px;
   outline: none;
-  color-scheme: dark;
   transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
 }
 
-input::placeholder,
+input[type="text"]::placeholder,
+input[type="url"]::placeholder,
 textarea::placeholder {
   color: #6f7fb0;
 }
 
-input:focus,
+input[type="text"]:focus,
+input[type="url"]:focus,
+input[type="file"]:focus,
 select:focus,
 textarea:focus {
   background: rgba(11, 20, 80, 0.85);
@@ -197,9 +189,30 @@ textarea:focus {
   box-shadow: 0 0 16px rgba(26, 140, 255, 0.28);
 }
 
+/* Opções do select no tema escuro */
 select option {
   background: #060b2e;
   color: var(--texto);
+}
+
+/* Botão interno do input file */
+input[type="file"]::file-selector-button {
+  margin-right: 12px;
+  padding: 7px 14px;
+  border: 1px solid rgba(26, 140, 255, 0.5);
+  border-radius: 10px;
+  background: rgba(26, 140, 255, 0.16);
+  color: var(--texto);
+  font-family: var(--fonte-texto);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background: rgba(26, 140, 255, 0.3);
+  border-color: var(--azul);
 }
 
 textarea {
@@ -208,31 +221,54 @@ textarea {
   line-height: 1.5;
 }
 
-/* ---------- Lista das últimas postadas ---------- */
-.item {
-  padding: 12px 0;
-  border-bottom: 1px solid rgba(91, 84, 255, 0.25);
+/* ---------- Escolha entre Arquivo e Link ---------- */
+.tipo {
+  display: flex;
+  gap: 14px;
+  margin-bottom: clamp(14px, 2vh, 20px);
   font-size: 14px;
   color: var(--texto);
 }
 
-.item:last-child {
-  border-bottom: none;
-}
-
-.item small {
-  display: block;
-  margin-top: 4px;
-  color: var(--texto-suave);
-}
-
-.vazio {
-  color: #6f7fb0;
+.tipo label {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   margin: 0;
+  padding: 11px 14px;
+  background: rgba(11, 20, 80, 0.45);
+  border: 1px solid rgba(91, 84, 255, 0.35);
+  border-radius: 14px;
+  color: var(--texto-suave);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
 }
 
-/* ---------- Botão Principal do Formulário ---------- */
-form button {
+.tipo label:hover {
+  background: rgba(26, 140, 255, 0.14);
+  border-color: var(--azul);
+  color: var(--texto);
+}
+
+.tipo input[type="radio"] {
+  accent-color: var(--azul);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* ---------- Dica ---------- */
+.dica {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #7e8ec0;
+}
+
+/* ---------- Botão Principal de Envio ---------- */
+button {
   width: 100%;
   margin-top: 6px;
   padding: clamp(13px, 1.6vh, 16px) 20px;
@@ -252,23 +288,16 @@ form button {
   transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
 }
 
-form button:hover {
+button:hover {
   transform: translateY(-2px);
   filter: brightness(1.12);
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.55), 0 0 22px rgba(26, 140, 255, 0.4);
 }
 
-form button:active {
+button:active {
   transform: translateY(0);
 }
 
-  /* Hide native radio and restyle */                                                                                    
-  input[type="radio"] {                                                                                              
-    width: 1.15em;                                          
-    height: 1.15em;
-    border-radius: 50%;
-
-  }
 /* ---------- Responsividade Celulares ---------- */
 @media (max-width: 560px) {
   body {
@@ -278,6 +307,11 @@ form button:active {
   .caixa {
     padding: 24px 18px;
     border-radius: 22px;
+  }
+
+  .tipo {
+    flex-direction: column;
+    gap: 10px;
   }
 }
 

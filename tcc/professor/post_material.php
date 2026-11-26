@@ -11,6 +11,10 @@ require './control/material.php'
 <link rel="stylesheet" href="./css/post_mat.css">
 </head>
 <body>
+
+<button><a href="./menu_professor2.html">voltar</a> </button>
+
+
 <div class="caixa">
   <h2>Postar material</h2>
 
@@ -71,7 +75,7 @@ require './control/material.php'
   <?php endif; ?>
 </div>
 
-<script src="./js/post_mat.js" ></script>
+<script src="../js/post_mat.js" ></script>
 
 </body>
 </html>

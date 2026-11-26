@@ -1,24 +1,37 @@
-  const radios       = document.querySelectorAll('input[name="tipo"]');
-  const blocoArquivo = document.getElementById('bloco-arquivo');
-  const blocoLink    = document.getElementById('bloco-link');
-  const campoArquivo = document.getElementById('campo-arquivo');
-  const campoLink    = document.getElementById('campo-link');
+// Alterna entre "Enviar arquivo" e "Link de vídeo":
+// com "link" marcado, some o campo de arquivo e aparece só o campo de texto do link.
 
-  // Mostra só o campo do tipo escolhido
-  function atualizar()
-  {
-    const ehLink = document.querySelector('input[name="tipo"]:checked').value === 'link';
+(function ()
+{
+    var radios       = document.querySelectorAll('input[name="tipo"]');
+    var blocoArquivo = document.getElementById('bloco-arquivo');
+    var blocoLink    = document.getElementById('bloco-link');
+    var campoArquivo = document.getElementById('campo-arquivo');
+    var campoLink    = document.getElementById('campo-link');
 
-    blocoArquivo.style.display = ehLink ? 'none' : 'block';
-    blocoLink.style.display    = ehLink ? 'block' : 'none';
+    function atualizar()
+    {
+        var marcado = document.querySelector('input[name="tipo"]:checked');
+        var usaLink = marcado !== null && marcado.value === 'link';
 
-    // campo escondido não pode ser "required", senão o navegador trava o envio
-    campoArquivo.required = !ehLink;
-    campoLink.required    = ehLink;
-  }
+        // mostra um bloco e esconde o outro
+        blocoArquivo.style.display = usaLink ? 'none' : '';
+        blocoLink.style.display    = usaLink ? '' : 'none';
 
-  radios.forEach(function (r) {
-    r.addEventListener('change', atualizar);
-  });
+        // o campo escondido não pode ser "required" (senão o navegador bloqueia o envio)
+        // e, desabilitado, também não vai junto no formulário
+        campoArquivo.required = !usaLink;
+        campoArquivo.disabled = usaLink;
 
-  atualizar();
+        campoLink.required = usaLink;
+        campoLink.disabled = !usaLink;
+    }
+
+    for (var i = 0; i < radios.length; i++)
+    {
+        radios[i].addEventListener('change', atualizar);
+    }
+
+    // já ajusta ao abrir a página (por exemplo, quando volta de um erro com "link" marcado)
+    atualizar();
+})();
