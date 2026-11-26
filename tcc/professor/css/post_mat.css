@@ -262,6 +262,13 @@ form button:active {
   transform: translateY(0);
 }
 
+  /* Hide native radio and restyle */                                                                                    
+  input[type="radio"] {                                                                                              
+    width: 1.15em;                                          
+    height: 1.15em;
+    border-radius: 50%;
+
+  }
 /* ---------- Responsividade Celulares ---------- */
 @media (max-width: 560px) {
   body {
