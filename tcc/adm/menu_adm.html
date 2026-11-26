@@ -1,79 +1,20 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>P.A.E. — Central do Administrador</title>
-  <link rel="stylesheet" href="menu_adm.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 <body>
-
-  <!-- Conteúdo Principal -->
-  <main id="principal">
-
-    <!-- Cabeçalho Central da Página -->
-    <section class="cabecalho-central">
-      <span class="etiqueta-painel">PAINEL DO ADMINISTRADOR</span>
-      <h1>P.A.E.</h1>
-      <p>Gerencie usuários, turmas, corpo docente, matérias e cursos do Projeto de Auxílio Escolar.</p>
-    </section>
-
-    <!-- Grade de 5 Módulos de Cadastro (3 em cima + 2 centralizados embaixo) -->
-    <section class="grade-modulos" aria-label="Cadastros do sistema">
-
-      <a href="./cadastro_usuario.php" class="modulo">
-        <div class="modulo-topo">
-          <span class="numero">01</span>
-          <span class="tag">ACESSO</span>
-        </div>
-        <h2>Cadastrar Usuário</h2>
-        <p>Criar contas de alunos e gerenciar permissões de login no portal.</p>
-        <span class="acao">Acessar cadastro &rarr;</span>
-      </a>
-
-      <a href="./cadastro_turma.php" class="modulo">
-        <div class="modulo-topo">
-          <span class="numero">02</span>
-          <span class="tag">ESTRUTURA</span>
-        </div>
-        <h2>Cadastrar Turma</h2>
-        <p>Registrar novas turmas, séries, turnos e organização de salas.</p>
-        <span class="acao">Acessar cadastro &rarr;</span>
-      </a>
-
-      <a href="./cadastro_professor.php" class="modulo">
-        <div class="modulo-topo">
-          <span class="numero">03</span>
-          <span class="tag">DOCENTES</span>
-        </div>
-        <h2>Cadastrar Professor</h2>
-        <p>Adicionar professores por RM e vincular às turmas e disciplinas.</p>
-        <span class="acao">Acessar cadastro &rarr;</span>
-      </a>
-
-      <a href="./cadastro_materia.php" class="modulo">
-        <div class="modulo-topo">
-          <span class="numero">04</span>
-          <span class="tag">CURRÍCULO</span>
-        </div>
-        <h2>Cadastrar Matéria</h2>
-        <p>Incluir disciplinas na grade escolar para postagem de conteúdos.</p>
-        <span class="acao">Acessar cadastro &rarr;</span>
-      </a>
-
-      <a href="./cadastro_curso.php" class="modulo">
-        <div class="modulo-topo">
-          <span class="numero">05</span>
-          <span class="tag">FORMAÇÃO</span>
-        </div>
-        <h2>Cadastrar Curso</h2>
-        <p>Configurar cursos técnicos ou regulares oferecidos pela instituição.</p>
-        <span class="acao">Acessar cadastro &rarr;</span>
-      </a>
-
-    </section>
-
-  </main>
-
+     <label>Dia da semana
+    <select name="dia_semana" required>
+      <option value="1">Segunda-feira</option>
+      <option value="2">Terça-feira</option>
+      <option value="3">Quarta-feira</option>
+      <option value="4">Quinta-feira</option>
+      <option value="5">Sexta-feira</option>
+      <option value="6">Sábado</option>
+    </select>
+  </label>
 </body>
 </html>

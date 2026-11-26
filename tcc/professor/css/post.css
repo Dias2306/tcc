@@ -31,6 +31,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 24px;
   padding: clamp(28px, 4vh, 56px) clamp(18px, 4vw, 48px);
 
   /* Laterais em azul/índigo e centro bem escuro */
@@ -53,28 +54,38 @@ body::before {
   background-size: 48px 48px;
 }
 
-/* ---------- Botão Voltar (caso tenha no topo) ---------- */
-.voltar {
+/* ---------- Botão Voltar (do seu HTML original) ---------- */
+body > button {
   position: fixed;
   top: clamp(18px, 2.5vh, 28px);
   left: clamp(18px, 2.5vw, 32px);
   z-index: 20;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 9px 18px;
+  width: auto;
+  margin: 0;
+  padding: 0;
   border-radius: 14px;
   background: rgba(6, 11, 46, 0.82);
   backdrop-filter: blur(6px);
   border: 1px solid rgba(26, 140, 255, 0.45);
-  color: var(--texto);
-  text-decoration: none;
-  font-size: 14px;
-  letter-spacing: 0.04em;
+  box-shadow: none;
   transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
 }
 
-.voltar:hover {
+body > button a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  color: var(--texto);
+  text-decoration: none;
+  font-family: var(--fonte-texto);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: capitalize;
+}
+
+body > button:hover {
   background: rgba(26, 140, 255, 0.22);
   box-shadow: 0 0 18px rgba(26, 140, 255, 0.45);
   transform: translateX(-3px);
@@ -98,7 +109,7 @@ body::before {
     0 0 32px rgba(26, 140, 255, 0.14);
 }
 
-/* Linha luminosa discreta no topo do card */
+/* Linha luminosa no topo do card */
 .caixa::before {
   content: "";
   position: absolute;
@@ -122,17 +133,28 @@ h2 {
   text-shadow: 0 0 24px rgba(26, 140, 255, 0.25);
 }
 
-/* ---------- Avisos / Alertas (caso exiba $aviso) ---------- */
-.aviso, .alerta, .mensagem {
+/* ---------- Avisos (Sucesso e Erro) ---------- */
+.aviso {
   padding: 12px 16px;
-  margin-bottom: 18px;
   border-radius: 14px;
+  margin-bottom: 18px;
   font-size: 14px;
   line-height: 1.5;
   color: var(--texto);
-  background: rgba(26, 140, 255, 0.14);
-  border: 1px solid rgba(26, 140, 255, 0.45);
-  border-left: 4px solid var(--azul);
+}
+
+.aviso.ok {
+  background: rgba(16, 185, 129, 0.14);
+  border: 1px solid rgba(16, 185, 129, 0.45);
+  border-left: 4px solid #10b981;
+  color: #a7f3d0;
+}
+
+.aviso.erro {
+  background: rgba(239, 68, 68, 0.14);
+  border: 1px solid rgba(239, 68, 68, 0.45);
+  border-left: 4px solid #ef4444;
+  color: #fecaca;
 }
 
 /* ---------- Labels e Campos ---------- */
@@ -145,9 +167,7 @@ label {
   color: var(--texto-suave);
 }
 
-input[type="text"],
-input[type="url"],
-input[type="file"],
+input,
 select,
 textarea {
   width: 100%;
@@ -160,18 +180,16 @@ textarea {
   border: 1px solid rgba(91, 84, 255, 0.38);
   border-radius: 14px;
   outline: none;
+  color-scheme: dark;
   transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
 }
 
-input[type="text"]::placeholder,
-input[type="url"]::placeholder,
+input::placeholder,
 textarea::placeholder {
   color: #6f7fb0;
 }
 
-input[type="text"]:focus,
-input[type="url"]:focus,
-input[type="file"]:focus,
+input:focus,
 select:focus,
 textarea:focus {
   background: rgba(11, 20, 80, 0.85);
@@ -179,30 +197,9 @@ textarea:focus {
   box-shadow: 0 0 16px rgba(26, 140, 255, 0.28);
 }
 
-/* Opções do select no tema escuro */
 select option {
   background: #060b2e;
   color: var(--texto);
-}
-
-/* Botão interno do input file */
-input[type="file"]::file-selector-button {
-  margin-right: 12px;
-  padding: 7px 14px;
-  border: 1px solid rgba(26, 140, 255, 0.5);
-  border-radius: 10px;
-  background: rgba(26, 140, 255, 0.16);
-  color: var(--texto);
-  font-family: var(--fonte-texto);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
-}
-
-input[type="file"]::file-selector-button:hover {
-  background: rgba(26, 140, 255, 0.3);
-  border-color: var(--azul);
 }
 
 textarea {
@@ -211,54 +208,31 @@ textarea {
   line-height: 1.5;
 }
 
-/* ---------- Escolha entre Arquivo e Link ---------- */
-.tipo {
-  display: flex;
-  gap: 14px;
-  margin-bottom: clamp(14px, 2vh, 20px);
+/* ---------- Lista das últimas postadas ---------- */
+.item {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(91, 84, 255, 0.25);
   font-size: 14px;
   color: var(--texto);
 }
 
-.tipo label {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin: 0;
-  padding: 11px 14px;
-  background: rgba(11, 20, 80, 0.45);
-  border: 1px solid rgba(91, 84, 255, 0.35);
-  border-radius: 14px;
-  color: var(--texto-suave);
-  cursor: pointer;
-  transition: border-color 0.2s, background 0.2s, color 0.2s;
+.item:last-child {
+  border-bottom: none;
 }
 
-.tipo label:hover {
-  background: rgba(26, 140, 255, 0.14);
-  border-color: var(--azul);
-  color: var(--texto);
-}
-
-.tipo input[type="radio"] {
-  accent-color: var(--azul);
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
-}
-
-/* ---------- Dica ---------- */
-.dica {
+.item small {
   display: block;
-  margin-top: 6px;
-  font-size: 12px;
-  color: #7e8ec0;
+  margin-top: 4px;
+  color: var(--texto-suave);
 }
 
-/* ---------- Botão Principal de Envio ---------- */
-button {
+.vazio {
+  color: #6f7fb0;
+  margin: 0;
+}
+
+/* ---------- Botão Principal do Formulário ---------- */
+form button {
   width: 100%;
   margin-top: 6px;
   padding: clamp(13px, 1.6vh, 16px) 20px;
@@ -278,13 +252,13 @@ button {
   transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
 }
 
-button:hover {
+form button:hover {
   transform: translateY(-2px);
   filter: brightness(1.12);
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.55), 0 0 22px rgba(26, 140, 255, 0.4);
 }
 
-button:active {
+form button:active {
   transform: translateY(0);
 }
 
@@ -297,11 +271,6 @@ button:active {
   .caixa {
     padding: 24px 18px;
     border-radius: 22px;
-  }
-
-  .tipo {
-    flex-direction: column;
-    gap: 10px;
   }
 }
 
